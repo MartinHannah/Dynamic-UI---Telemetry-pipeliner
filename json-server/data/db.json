@@ -1,0 +1,43 @@
+{
+    "views": [
+        {
+            "id": 1,
+            "type": "admin",
+            "routes": [
+                {
+                    "path": "/dashboard",
+                    "exact": true,
+                    "displayName": "Dashboard", 
+                    "component": "Dashboard",
+                    "icon": "fas fa-th-large"
+                }, 
+                {
+                    "path": "/reports",
+                    "displayName": "Reports",
+                    "component": "Reports",
+                    "icon": "fas fa-chart-bar"
+                }, 
+                {
+                    "path": "/buildings/edit",
+                    "displayName": "Edit Buildings",
+                    "component": "Dashboard",
+                    "icon": "fas fa-building"
+                }
+            ]
+        }, 
+        {
+            "id": 2,
+            "type": "user",
+            "routes": [
+                {
+                    "path": "/dashboard",
+                    "name": "Dashboard"
+                }, 
+                {
+                    "path": "/reports",
+                    "name": "Reports"
+                }
+            ]    
+        }
+    ]
+}
