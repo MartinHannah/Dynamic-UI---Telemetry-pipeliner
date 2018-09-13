@@ -39,8 +39,8 @@ const styles = theme => ({
         display: 'none',
       },
 });
-class TopBar extends React.Component { 
 
+class TopBar extends React.Component { 
 
     componentDidMount(){
 
@@ -87,10 +87,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 TopBar.propTypes = {
-    classes: PropTypes.isRequired,
-    currentView: PropTypes.isRequired,
+    classes: PropTypes.shape.isRequired,
+    currentView: PropTypes.string.isRequired,
     menuOpen: PropTypes.bool.isRequired,
-    toggleMenu: PropTypes.isRequired
+    toggleMenu: PropTypes.func.isRequired
 };
 
 export default compose(

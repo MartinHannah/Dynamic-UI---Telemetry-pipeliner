@@ -1,14 +1,8 @@
 import * as React from 'react';
 import './App.css';
-import * as Loadable from 'react-loadable';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-
-const LoadableLayout = Loadable({
-  loader: () => import('./containers/default-layout/DefaultLayout'),
-  loading() {
-    return <div>Loading...</div>
-  }
-});
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import DefaultLayout from './containers/default-layout/DefaultLayout';
 
 
 class App extends React.Component {
@@ -21,9 +15,11 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className="App">
-        <LoadableLayout />
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/" name="Home" component={DefaultLayout} />
+        </Switch>
+      </Router>
     );
   }
 }

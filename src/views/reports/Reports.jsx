@@ -11,7 +11,7 @@ class Reports extends React.Component {
   render() {
     return (
       <div>
-        <h1>Reports</h1>
+        <h1>Reports View </h1>
       </div>
     );
   }

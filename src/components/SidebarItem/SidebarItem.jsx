@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
-import { updateCurrentView } from '../../actions/views/actions';
 
 const styles = ({
   icon: {
@@ -20,9 +19,9 @@ const styles = ({
   }
 });
 
-function SidebarItem({ path, name, icon, classes }) {
+function SidebarItem({ path, name, icon, classes, click }) {
     return (
-      <NavLink to={path} className={classes.link} onClick={() => updateCurrentView(name)}>
+      <NavLink to={path} className={classes.link} onClick={() => click(name)}>
         <ListItem button>
           <Icon className={classNames(icon, classes.icon)} />
           <ListItemText primary={name} className={classes.text} />
@@ -32,9 +31,10 @@ function SidebarItem({ path, name, icon, classes }) {
 }
 
 SidebarItem.propTypes = {
-    path: PropTypes.isRequired,
-    name: PropTypes.isRequired,
-    icon: PropTypes.isRequired,
-    classes: PropTypes.isRequired
+    path: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    classes: PropTypes.shape.isRequired,
+    click: PropTypes.func.isRequired
 }
 export default withStyles(styles)(SidebarItem);

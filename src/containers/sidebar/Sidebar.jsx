@@ -45,7 +45,7 @@ const styles = theme => ({
 });
 
 const LoadableSidebarItem= Loadable({
-    loader: () => import('../../components/sidebar-item/SidebarItem'),
+    loader: () => import('../../components/SidebarItem'),
     loading() {
       return <div>Loading...</div>
     }
@@ -57,7 +57,7 @@ class Sidebar extends React.Component{
 
     }
     render() {
-        const { classes, views, theme, menuOpen, toggleMenu } = this.props;
+        const { classes, views, theme, menuOpen, toggleMenu, updateCurrentView } = this.props;
         return (
           <div>
             <Drawer
@@ -73,7 +73,7 @@ class Sidebar extends React.Component{
                 </IconButton>
               </div>
               <List>
-                {views.map((view) => <LoadableSidebarItem key={view.displayName} path={view.path} name={view.displayName} icon={view.icon} />)}
+                {views.map((view) => <LoadableSidebarItem key={view.displayName} path={view.path} name={view.displayName} icon={view.icon} click={updateCurrentView} />)}
               </List>
             </Drawer>
           </div>
@@ -91,9 +91,6 @@ const mapStateToProps = (state) => {
   // 
   const mapDispatchToProps = (dispatch) => {
     return { 
-      loadViews: (id) => { 
-        dispatch(viewActions.loadViews(id));
-      },
       toggleMenu: (isOpen) => { 
           dispatch(viewActions.toggleMenu(isOpen));
       },
@@ -106,9 +103,10 @@ const mapStateToProps = (state) => {
 Sidebar.propTypes = {
     classes: PropTypes.isRequired,
     theme: PropTypes.isRequired,
-    views: PropTypes.isRequired,
+    views: PropTypes.shape.isRequired,
     menuOpen: PropTypes.bool.isRequired,
-    toggleMenu: PropTypes.isRequired
+    toggleMenu: PropTypes.func.isRequired,
+    updateCurrentView: PropTypes.func.isRequired
 }
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

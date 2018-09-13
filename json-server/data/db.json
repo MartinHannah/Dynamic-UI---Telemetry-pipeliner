@@ -19,8 +19,8 @@
                 }, 
                 {
                     "path": "/buildings/edit",
-                    "displayName": "Edit Buildings",
-                    "component": "Dashboard",
+                    "displayName": "Buildings",
+                    "component": "Buildings",
                     "icon": "fas fa-building"
                 }
             ]

@@ -11,7 +11,7 @@ export default function viewReducer(state = initialState, action) {
   switch (action.type) {
     case types.LOAD_VIEWS_SUCCESS:
       return Object.assign({}, state, {
-        views: action.views.routes,
+        views: action.views,
         viewsLoaded: true,
       });
     case types.UPDATE_CURRENT_VIEW:

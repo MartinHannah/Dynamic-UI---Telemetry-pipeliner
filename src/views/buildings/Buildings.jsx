@@ -1,8 +1,7 @@
 import * as React from 'react';
-import './Dashboard.css';
 import Grid from '@material-ui/core/Grid';
 
-export default class Dashboard extends React.Component{ 
+class Buildings extends React.Component{ 
     
       componentWillMount(){
     
@@ -11,8 +10,10 @@ export default class Dashboard extends React.Component{
     render() {
         return (
           <Grid item>
-            <h1>Dashboard</h1>
+            <h1>Building View</h1>
           </Grid>
         );
     }
 }
+
+export default Buildings;
