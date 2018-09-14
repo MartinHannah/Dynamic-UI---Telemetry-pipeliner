@@ -27,14 +27,14 @@ const styles = theme => ({
 });
 
 const LoadableAppBar = Loadable({
-    loader: () => import('../../components/topbar/TopBar'),
+    loader: () => import('../TopBar/TopBar'),
     loading() {
       return <div>Loading...</div>
     }
   });
 
 const LoadableSideBar = Loadable({
-    loader: () => import('../../components/sidebar/Sidebar'),
+    loader: () => import('../Sidebar/Sidebar'),
     loading() {
       return <div>Loading...</div>
     }

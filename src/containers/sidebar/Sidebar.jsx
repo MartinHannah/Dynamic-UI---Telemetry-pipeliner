@@ -45,7 +45,7 @@ const styles = theme => ({
 });
 
 const LoadableSidebarItem= Loadable({
-    loader: () => import('../../components/SidebarItem'),
+    loader: () => import('../../components/SidebarItem/SidebarItem'),
     loading() {
       return <div>Loading...</div>
     }

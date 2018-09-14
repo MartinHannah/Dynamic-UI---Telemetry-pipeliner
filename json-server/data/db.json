@@ -18,7 +18,7 @@
                     "icon": "fas fa-chart-bar"
                 }, 
                 {
-                    "path": "/buildings/edit",
+                    "path": "/buildings",
                     "displayName": "Buildings",
                     "component": "Buildings",
                     "icon": "fas fa-building"

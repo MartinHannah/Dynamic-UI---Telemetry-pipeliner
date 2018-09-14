@@ -47,7 +47,7 @@ class TopBar extends React.Component {
     }
 
     render() {
-        const {currentView, classes, menuOpen, toggleMenu } = this.props;
+        const {classes, menuOpen, toggleMenu, currentView } = this.props;
 
         return (
           <AppBar
@@ -64,7 +64,7 @@ class TopBar extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="title" color="inherit" noWrap>
-                {currentView}
+                { currentView }
               </Typography>
             </Toolbar>
           </AppBar>

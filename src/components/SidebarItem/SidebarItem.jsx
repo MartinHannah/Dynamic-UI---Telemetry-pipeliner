@@ -9,7 +9,7 @@ import Icon from '@material-ui/core/Icon';
 
 const styles = ({
   icon: {
-    color: '#ccc'
+    color: 'rgb(243, 108, 3, 0.8 )'
   },
   link: {
     textDecoration: 'none'
