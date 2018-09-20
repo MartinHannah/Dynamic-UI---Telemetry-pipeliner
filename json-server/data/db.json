@@ -1,8 +1,7 @@
 {
-    "views": [
+    "routes": [
         {
-            "id": 1,
-            "type": "admin",
+            "id": "admin",
             "routes": [
                 {
                     "path": "/dashboard",
@@ -23,21 +22,34 @@
                     "component": "Buildings",
                     "icon": "fas fa-building"
                 }
-            ]
-        }, 
+            ] 
+        }
+    ],
+    "users": [
         {
-            "id": 2,
-            "type": "user",
-            "routes": [
+            "id": 10,
+            "level": "admin",
+            "containers": [
                 {
-                    "path": "/dashboard",
-                    "name": "Dashboard"
-                }, 
+                    "id": "Dashboard",
+                    "widgets": [
+                        "BarGraph",
+                        "Report"
+                    ]
+                },
                 {
-                    "path": "/reports",
-                    "name": "Reports"
+                    "id": "Reports",
+                    "widgets": [
+                        "Report"
+                    ]
+                },
+                {            
+                    "id": "Buildings",
+                    "widgets": [
+                        "Building"
+                    ]
                 }
-            ]    
+            ]
         }
     ]
 }
