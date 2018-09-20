@@ -19,15 +19,26 @@ const styles = ({
   }
 });
 
-function SidebarItem({ path, name, icon, classes, click }) {
+//()
+class SidebarItem extends React.Component {
+  getContainer(name, containers){
+    return containers.find((container) => {
+      return container.id == name;
+    })
+  }
+
+  render() { 
+    const { path, name, icon, classes, click, containers } = this.props;
     return (
-      <NavLink to={path} className={classes.link} onClick={() => click(name)}>
+      <NavLink to={path} className={classes.link} onClick={() => click(name, containers, this.getContainer)}>
         <ListItem button>
           <Icon className={classNames(icon, classes.icon)} />
           <ListItemText primary={name} className={classes.text} />
         </ListItem>
       </NavLink>
     );
+  }
+    
 }
 
 SidebarItem.propTypes = {
@@ -35,6 +46,7 @@ SidebarItem.propTypes = {
     name: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
     classes: PropTypes.shape.isRequired,
-    click: PropTypes.func.isRequired
+    click: PropTypes.func.isRequired,
+    containers: PropTypes.isRequired
 }
 export default withStyles(styles)(SidebarItem);

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import './DefaultLayout.css';
-import * as Loadable from 'react-loadable';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from "react-router-dom";
-
+import { DefaultTopBar, DefaultComponent, DefaultSideBar } from '../../utils/views';
 
 const styles = theme => ({
     root: {
@@ -26,19 +25,7 @@ const styles = theme => ({
       appBarSpacer: theme.mixins.toolbar,
 });
 
-const LoadableAppBar = Loadable({
-    loader: () => import('../TopBar/TopBar'),
-    loading() {
-      return <div>Loading...</div>
-    }
-  });
 
-const LoadableSideBar = Loadable({
-    loader: () => import('../Sidebar/Sidebar'),
-    loading() {
-      return <div>Loading...</div>
-    }
-  });
 
 class DefaultLayout extends React.Component{ 
 
@@ -49,8 +36,8 @@ class DefaultLayout extends React.Component{
         const { classes, views } = this.props;
         return (
           <div className={classes.root}>
-            <LoadableAppBar />
-            <LoadableSideBar />
+            <DefaultTopBar />
+            <DefaultSideBar />
             <main className={classes.content}>
               <div className={classes.appBarSpacer}>
                 <Switch>
@@ -60,7 +47,7 @@ class DefaultLayout extends React.Component{
                       path={view.path}
                       exact={view.exact}
                       name={view.displayName}
-                      render={props => <view.component {...props} />}
+                      component={DefaultComponent}
                     />
                     ))}
                   <Redirect from="/" to="/dashboard" />

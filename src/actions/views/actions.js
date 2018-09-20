@@ -17,9 +17,25 @@ export const loadViews = function (id) {
   };
 };
 
-export function updateCurrentView(name) {
+export function loadContainers(id) { 
+  return function (dispatch) { 
+    return api.getUserViews(id).then((containers) => {
+      dispatch(updateContainers(containers))
+    }).catch((error) => {
+      throw (error);
+    });
+  }
+}
+
+export const updateContainers = function (containers) {
   return {
-    type: types.UPDATE_CURRENT_VIEW, name,
+    type: types.UPDATE_CONTAINERS, containers
+  };
+}
+
+export function updateCurrentView(view) {
+  return {
+    type: types.UPDATE_CURRENT_VIEW, view,
   };
 }
 

@@ -51,13 +51,14 @@ const LoadableSidebarItem= Loadable({
     }
   });
 
-class Sidebar extends React.Component{ 
+class DefaultSideBar extends React.Component{ 
 
     componentWillMount(){
 
     }
+
     render() {
-        const { classes, views, theme, menuOpen, toggleMenu, updateCurrentView } = this.props;
+        const { classes, views, theme, menuOpen, toggleMenu, updateCurrentView, containers } = this.props;
         return (
           <div>
             <Drawer
@@ -73,7 +74,7 @@ class Sidebar extends React.Component{
                 </IconButton>
               </div>
               <List>
-                {views.map((view) => <LoadableSidebarItem key={view.displayName} path={view.path} name={view.displayName} icon={view.icon} click={updateCurrentView} />)}
+                {views.map((view) => <LoadableSidebarItem key={view.displayName} path={view.path} name={view.displayName} icon={view.icon} click={updateCurrentView} containers={containers} />)}
               </List>
             </Drawer>
           </div>
@@ -85,7 +86,8 @@ const mapStateToProps = (state) => {
       views: state.viewReducer.views,
       viewsLoaded: state.viewReducer.viewsLoaded,
       currentView: state.viewReducer.currentView,
-      menuOpen: state.viewReducer.menuOpen
+      menuOpen: state.viewReducer.menuOpen,
+      containers: state.viewReducer.containers
     };
   }
   // 
@@ -94,21 +96,24 @@ const mapStateToProps = (state) => {
       toggleMenu: (isOpen) => { 
           dispatch(viewActions.toggleMenu(isOpen));
       },
-      updateCurrentView: (view) => { 
-          dispatch(viewActions.updateCurrentView(view));
+      updateCurrentView: (viewName, containers, find) => { 
+          let container = find(viewName, containers);
+          //console.log(state.viewReducer.containers);
+          dispatch(viewActions.updateCurrentView(container));
       }
     }
   }
 
-Sidebar.propTypes = {
+DefaultSideBar.propTypes = {
     classes: PropTypes.isRequired,
     theme: PropTypes.isRequired,
     views: PropTypes.shape.isRequired,
     menuOpen: PropTypes.bool.isRequired,
     toggleMenu: PropTypes.func.isRequired,
-    updateCurrentView: PropTypes.func.isRequired
+    updateCurrentView: PropTypes.func.isRequired,
+    containers: PropTypes.isRequired
 }
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles, {withTheme: true})
-)(Sidebar);
+)(DefaultSideBar);

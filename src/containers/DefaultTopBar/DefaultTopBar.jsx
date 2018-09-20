@@ -40,7 +40,7 @@ const styles = theme => ({
       },
 });
 
-class TopBar extends React.Component { 
+class DefaultTopBar extends React.Component { 
 
     componentDidMount(){
 
@@ -64,7 +64,7 @@ class TopBar extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="title" color="inherit" noWrap>
-                { currentView }
+                { currentView}
               </Typography>
             </Toolbar>
           </AppBar>
@@ -73,7 +73,7 @@ class TopBar extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    currentView: state.viewReducer.currentView,
+    currentView: state.viewReducer.currentView.name,
     menuOpen: state.viewReducer.menuOpen
   };
 }
@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-TopBar.propTypes = {
+DefaultTopBar.propTypes = {
     classes: PropTypes.shape.isRequired,
     currentView: PropTypes.string.isRequired,
     menuOpen: PropTypes.bool.isRequired,
@@ -96,4 +96,4 @@ TopBar.propTypes = {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles, {withTheme: true})
-)(TopBar);
+)(DefaultTopBar);
