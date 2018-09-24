@@ -1,20 +1,14 @@
 import * as React from 'react';
-import PropTypes from 'prop-types'; 
+import './Reports.scss';
 
-
-
-function Report({ name }) {
+function Report() {
     return (
       <div>
         <h1>
-            Latest Report 
-          {name}
+            dkfljsdfks
         </h1>
       </div>
     );
 }
 
-Report.propTypes = {
-    name: PropTypes.string.isRequired
-}
 export default(Report);

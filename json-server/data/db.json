@@ -1,55 +1,65 @@
 {
-    "routes": [
-        {
-            "id": "admin",
-            "routes": [
-                {
-                    "path": "/dashboard",
-                    "exact": true,
-                    "displayName": "Dashboard", 
-                    "component": "Dashboard",
-                    "icon": "fas fa-th-large"
-                }, 
-                {
-                    "path": "/reports",
-                    "displayName": "Reports",
-                    "component": "Reports",
-                    "icon": "fas fa-chart-bar"
-                }, 
-                {
-                    "path": "/buildings",
-                    "displayName": "Buildings",
-                    "component": "Buildings",
-                    "icon": "fas fa-building"
-                }
-            ] 
-        }
-    ],
-    "users": [
-        {
-            "id": 10,
-            "level": "admin",
-            "containers": [
-                {
-                    "id": "Dashboard",
-                    "widgets": [
-                        "BarGraph",
-                        "Report"
-                    ]
-                },
-                {
-                    "id": "Reports",
-                    "widgets": [
-                        "Report"
-                    ]
-                },
-                {            
-                    "id": "Buildings",
-                    "widgets": [
-                        "Building"
-                    ]
-                }
-            ]
-        }
-    ]
+  "routes": [
+    {
+      "id": "Dashboard",
+      "path": "/dashboard",
+      "exact": true,
+      "icon": "fas fa-th-large"
+    },
+    {
+      "id": "Reports",
+      "path": "/reports",
+      "exact": false,
+      "icon": "fas fa-chart-bar"
+    },
+    {
+      "id": "Buildings",
+      "path": "/buildings",
+      "exact": false,
+      "icon": "fas fa-building"
+    }
+  ],
+  "widgets": [
+    {
+      "id": "Dashboard",
+      "widgets": [
+        "AddToDashboard",
+        "LatestReport"
+      ],
+      "availableWidgets": []
+    },
+    {
+      "id": "Reports",
+      "widgets": [
+        "Report"
+      ]
+    },
+    {
+      "id": "Buildings",
+      "widgets": [
+        "Building"
+      ]
+    },
+    {
+      "id": "AddToDashboard",
+      "icon": "fas fa-plus",
+      "component": "AddToDashboard"
+    },
+    {
+      "id": "Report",
+      "component": "Report"
+    },
+    {
+      "id": "Building",
+      "component": "Building"
+    },
+    {
+      "id": "LatestReport",
+      "name": "Latest Report",
+      "icon": "fas fa-building",
+      "component": "DashboardWidget",
+      "innerComponent": "Report",
+      "info": "View and Download your latest report easily with this widget."
+    }
+  ]
 }

@@ -4,7 +4,8 @@ import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers/rootReducer';
 
 const loggerMiddleware = createLogger();
-export default function configureStore() {
+
+const configureStore = () => {
   return createStore(
     rootReducer,
     applyMiddleware(
@@ -13,3 +14,4 @@ export default function configureStore() {
     )
   )
 }
+export default configureStore; 

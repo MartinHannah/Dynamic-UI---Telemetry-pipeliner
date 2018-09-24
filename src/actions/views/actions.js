@@ -1,46 +1,51 @@
 import * as api from '../../utils/api';
 import * as types from './actionTypes';
 
-export function loadViewsSuccess(views) {
+export const loadViewsSuccess = (views) => {
     return {
       type: types.LOAD_VIEWS_SUCCESS, views: views,
     };
 }
 
-export const loadViews = function (id) {
+export const loadViews = (id) => {
   return function (dispatch) {
     return api.getRoutes(id).then((views) => {
       dispatch(loadViewsSuccess(views));
-    }).catch((error) => {
-      throw (error);
+    }).catch((err) => {
+      throw (err);
     });
   };
 };
 
-export function loadContainers(id) { 
+export const loadNewView = (widget) => { 
   return function (dispatch) { 
-    return api.getUserViews(id).then((containers) => {
-      dispatch(updateContainers(containers))
-    }).catch((error) => {
-      throw (error);
+    console.log("WIDGET", widget);
+    return api.loadWidget(widget).then((widget) => {
+      console.log("RETURNED", widget);
+      dispatch(updateCurrentView(widget));
+    }).catch((err) => {
+      throw (err);
+    })
+  }
+}
+
+export const modifyDashboardWidget = (widgetId, child, add) => {
+  return function (dispatch) {  
+    return api.updateDashboardWidget(widgetId, child, add).then((widget) => {
+      dispatch(loadNewView(widget.data.id));
     });
   }
 }
 
-export const updateContainers = function (containers) {
-  return {
-    type: types.UPDATE_CONTAINERS, containers
-  };
-}
-
-export function updateCurrentView(view) {
+export const updateCurrentView = (view) => {
   return {
     type: types.UPDATE_CURRENT_VIEW, view,
   };
 }
 
-export function toggleMenu(isOpen) { 
+export const toggleMenu = (isOpen) => { 
     return { 
         type: types.MENU_OPEN_CLOSE, isOpen
     };
 }
+

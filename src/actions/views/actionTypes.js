@@ -1,5 +1,4 @@
 export const LOAD_VIEWS_SUCCESS = 'views.LOAD_VIEWS_SUCCESS';
 export const UPDATE_CURRENT_VIEW = 'views.UPDATE_CURRENT_VIEW';
-export const UPDATE_CONTAINERS = 'views.UPDATE_CONTAINERS';
 
 export const MENU_OPEN_CLOSE = 'views.MENU_OPEN_CLOSE';

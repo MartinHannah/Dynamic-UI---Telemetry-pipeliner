@@ -1,20 +1,9 @@
 import * as React from 'react';
-import PropTypes from 'prop-types'; 
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-//import classNames from 'classnames';
-import compose from 'recompose/compose';
 
-const styles = ({
-  card: { 
-    textAlign: 'center',
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-  }
-});
-
-function Building({classes }) {
+function Building() {
     return (
-      <Grid item xs={12} className={classes.graph}>
+      <Grid item xs={12} className='card'>
         <h1>
           Building
         </h1>
@@ -22,9 +11,4 @@ function Building({classes }) {
     );
 }
 
-Building.propTypes = {
-    classes: PropTypes.isRequired
-}
-export default compose(
-  withStyles(styles, {withTheme: true})
-)(Building);
+export default Building;

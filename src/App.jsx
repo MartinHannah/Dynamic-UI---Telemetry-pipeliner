@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './App.css';
+import './App.scss';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DefaultLayout from './containers/DefaultLayout/DefaultLayout';

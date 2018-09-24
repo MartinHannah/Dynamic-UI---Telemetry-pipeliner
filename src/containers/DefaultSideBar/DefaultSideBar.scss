@@ -1,0 +1,22 @@
+@import '../../App';
+
+.drawer-paper { 
+    position: relative;
+    white-space: nowrap;
+    width: $sidebarWidth;
+    transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+}
+
+.drawer-paper-close { 
+    overflow-x: hidden;
+    transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    width: 72px;
+}
+
+.toolbar { 
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 8px;
+    min-height: $toolbar-height;
+}

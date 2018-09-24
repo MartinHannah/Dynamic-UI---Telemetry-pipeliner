@@ -1,0 +1,21 @@
+@import '../../App';
+
+.root { 
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+    display: flex;
+}
+
+.content { 
+    flex-grow: 1;
+    padding: 10px;
+    height: 100vh;
+    margin-top: 25px;
+    overflow: auto;
+}
+
+.spacer { 
+    padding-top: 50px;
+    min-height: $toolbar-height;
+}
