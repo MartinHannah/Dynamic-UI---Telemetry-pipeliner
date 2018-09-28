@@ -1,0 +1,14 @@
+@import '../../App';
+
+.building-item { 
+    margin: $standard-margin;
+    padding: $standard-padding;
+}
+
+.building-type-icon { 
+    font-size: 32px;
+}
+
+.overview { 
+    padding: $standard-padding * 2;
+}

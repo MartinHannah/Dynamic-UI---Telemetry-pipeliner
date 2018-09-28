@@ -3,10 +3,12 @@ import * as components from './views';
 
 const baseDomain = 'http://localhost:8080';
 
-//Get the views for this user
-export const getViews = () => axios.get(`${baseDomain}/routes/`);
-export const getWidget = (id) => axios.get(`${baseDomain}/widgets/${id}`);
-export const updateWidget = (id, data) => axios.put(`${baseDomain}/widgets/${id}`, data);
+//Calls to json
+const getViews = () => axios.get(`${baseDomain}/routes/`);
+const getWidget = (id) => axios.get(`${baseDomain}/widgets/${id}`);
+const updateWidget = (id, data) => axios.put(`${baseDomain}/widgets/${id}`, data);
+export const getBuildings = () => axios.get(`${baseDomain}/buildings/`);
+export const getEnergyData = (id) => axios.get(`${baseDomain}/${id}`)
 
 const getComponent = component => components[component];
 
@@ -41,7 +43,7 @@ export const loadWidget = async (widgetId) => {
 }
 
 //Remove the specified child widget from the dashboard
-export const updateDashboardWidget = async(widgetId, child, add = true) => { 
+export const updateDashboardWidget = async(widgetId, child, add = true, childOptions = "") => { 
     return getWidget(widgetId).then(async(result) => {     
         const widget = result.data;
         //if there are no child widgets, do nothing for now
@@ -49,29 +51,63 @@ export const updateDashboardWidget = async(widgetId, child, add = true) => {
             return;
 
         if(add) { 
-            widget.widgets.push(child);
-            widget.availableWidgets = removeWidget(widget.availableWidgets, child);
+            return getWidget(child).then((wid) => { 
+                let options = wid.data.userOptions.map((option) => ({
+                    [option.name]: childOptions[option.name]
+                })).reduce((obj, item) => { 
+                    obj[item.key] = item.value
+                })
+                let dashboardWidget =  {
+                    widget: child, 
+                    options: options
+                }
+                widget.widgets.push(dashboardWidget);
+                if(!wid.data.allowMultiple) { 
+                    widget.availableWidgets = removeWidget(widget.availableWidgets, child);
+                }
+                return updateWidget(widgetId, widget);
+            }); 
+            
         } else { 
-            widget.availableWidgets.push(child);
             widget.widgets = removeWidget(widget.widgets, child);
+            return updateWidget(widgetId, widget);
         }
-       return updateWidget(widgetId, widget);
     })
 }
 
+export const modifyOptions = async(widgetId, options) => { 
+    return getWidget(widgetId).then(async(result) => {
+        const widget = result.data;
+
+        //If there are no option on this widget ,do nothing.
+        if(!widget.options)
+        return;
+
+        widget.options = Object.assign(widget.options, options)
+        return updateWidget(widgetId, widget);
+    })
+}
+
+
 //find the widget in the array by the id and then remove it
 const removeWidget = (array, widgetId) => { 
-    let index = -1; 
-    index = array.indexOf(widgetId);
-    if(index > -1) { 
-        array.splice(index, 1);
+    let index;
+    for (var i=0; i < array.length; i++){
+        if(array[i].widget == widgetId) { 
+            index = i;
+        }
     }
+    array.splice(index, 1);
     return array;
 }
 
 //load the widgets in the array.
 const mapWidgets = async (array) => { 
     return Promise.all(array.map(async (widget) => {
-        return loadWidget(widget);
+        const widgetFinal = await loadWidget(widget.widget)
+        return {
+            widget: widgetFinal,
+            options: widget.options
+        }
     }));
 } 

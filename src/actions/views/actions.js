@@ -19,9 +19,9 @@ export const loadViews = (id) => {
 
 export const loadNewView = (widget) => { 
   return function (dispatch) { 
-    console.log("WIDGET", widget);
+    console.log(widget);
     return api.loadWidget(widget).then((widget) => {
-      console.log("RETURNED", widget);
+      console.log(widget);
       dispatch(updateCurrentView(widget));
     }).catch((err) => {
       throw (err);
@@ -29,12 +29,21 @@ export const loadNewView = (widget) => {
   }
 }
 
-export const modifyDashboardWidget = (widgetId, child, add) => {
+export const modifyDashboardWidget = (widgetId, child, add, childOptions) => {
   return function (dispatch) {  
-    return api.updateDashboardWidget(widgetId, child, add).then((widget) => {
+    return api.updateDashboardWidget(widgetId, child, add, childOptions).then((widget) => {
       dispatch(loadNewView(widget.data.id));
     });
   }
+}
+
+export const modifyWidgetOptions = (widgetId, options, parent, add) => { 
+  return function(dispatch) { 
+    return api.modifyOptions(widgetId, options).then(() => {  
+      dispatch(modifyDashboardWidget(parent, widgetId, add));
+    })
+  }
+
 }
 
 export const updateCurrentView = (view) => {

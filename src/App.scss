@@ -1,13 +1,26 @@
 
 $font-stack: 'Roboto', sans-serif;
+$font-stack-secondary: 'Raleway', sans-serif;
 
 //Colours
-$primary-color: rgba(243, 108, 3, 0.8 );
+$primary-color: #EF5736;
+$secondary-color: #F47545;
+
 $font-color: #000;
 
 
 //Widths
 $sidebarWidth: 240px;
 $toolbar-height: 56px;
+$standard-padding: 5px;
+$standard-margin: 10px;
+
+
+.icon-button { 
+    padding: 0px;
+    width: auto;
+    height: inherit;
+    border-radius: 25px;
+}
 
 

@@ -29,19 +29,19 @@ class DashboardWidget extends React.Component {
       };
 
     render(){ 
-        const { name, innerComponent, id, modifyWidget } = this.props;
+        const { widget, modifyWidget, ...other } = this.props;
         const { anchorEl } = this.state;
-        const Component = components[innerComponent];
+        const Component = components[widget.innerComponent];
         return (
-          <Grid container>
-            <Paper className="dashboard-widget">
+          <Grid container className="dashboard-widget">
+            <Paper>
               <Grid 
                 container
                 justify='space-between'
                 className="widget-header"
               >
                 <Typography variant="title" className='widget-title'>
-                  {name}
+                  {widget.name}
                 </Typography>
                 <IconButton
                   className='icon-button'
@@ -55,13 +55,13 @@ class DashboardWidget extends React.Component {
                   id="simple-menu"
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
-                  onClose={() => this.handleClose(id)}
+                  onClose={() => this.handleClose(widget.id)}
                 >
-                  <MenuItem onClick={() => modifyWidget('Dashboard', id, false)}>Remove from Dashboard</MenuItem>
+                  <MenuItem onClick={() => modifyWidget('Dashboard', widget.id, false)}>Remove from Dashboard</MenuItem>
                 </Menu>
               </Grid>
               <Grid item>
-                <Component />
+                <Component widget={widget} {...other} />
               </Grid>
             </Paper>
           </Grid>
@@ -84,9 +84,11 @@ const mapDispatchToProps = (dispatch) => {
 
 
 DashboardWidget.propTypes = { 
-    name: PropTypes.string.isRequired,
-    innerComponent: PropTypes.node.isRequired, 
-    id: PropTypes.string.isRequired,
+    widget: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      innerComponent: PropTypes.node.isRequired, 
+      id: PropTypes.string.isRequired,
+    }).isRequired,
     modifyWidget: PropTypes.func.isRequired
 }
 

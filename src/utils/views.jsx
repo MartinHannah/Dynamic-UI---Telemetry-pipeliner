@@ -5,7 +5,6 @@ import Loadable from 'react-loadable';
 
 const LoadingComponent = () => (<div>Loading...</div>) ;
   
-
 //DEFAULT CONTAINERS
 export const DefaultTopBar = Loadable({
     loader: () => import('../containers/DefaultTopBar/DefaultTopBar'),
@@ -23,7 +22,6 @@ export const DefaultComponent = Loadable({
 });
 
 //WIDGETS
-
 export const Report = Loadable({
     loader: () => import('../components/Report/Report'),
     loading: LoadingComponent
@@ -41,5 +39,20 @@ export const AddToDashboard = Loadable({
 
 export const DashboardWidget = Loadable({
     loader: () => import('../components/DashboardWidget/DashboardWidget'),
+    loading: LoadingComponent
+});
+
+export const AreaBarChart = Loadable({
+    loader: () => import('../components/AreaBarChart/AreaBarChart'),
+    loading: LoadingComponent
+});
+
+export const ChartWrapper = Loadable({ 
+    loader: () => import('../components/ChartWrapper/ChartWrapper'),
+    loading: LoadingComponent
+})
+
+export const AreaOnlyChart = Loadable({
+    loader: () => import('../components/AreaOnlyChart/AreaOnlyChart'),
     loading: LoadingComponent
 });

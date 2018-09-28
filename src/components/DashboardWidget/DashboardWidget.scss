@@ -5,20 +5,24 @@
     min-width: 200px;
 
     .settings { 
-        color: #000;
+        color: #fff;
         font-size: 15px;
-    }
-    
-    .icon-button { 
-        padding: 0px;
-        width: auto;
-        height: inherit;
-        border-radius: 25px;
-    }
-
-    .widget-title{
     }
 
     .widget-header { 
+        padding: $standard-padding;
+        margin-bottom: $standard-margin;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+
+        .widget-title { 
+            color: #000;
+            font-weight: 300;
+        }
+
+        .icon-button { 
+            color: #000;
+        }
     }
+
 }
