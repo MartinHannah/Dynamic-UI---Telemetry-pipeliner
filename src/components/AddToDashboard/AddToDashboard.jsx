@@ -16,9 +16,14 @@ import { modifyDashboardWidget } from '../../actions/views/actions';
 
 class DashboardSettings extends React.Component {
 
-  state = {
-    open: false,
-  };
+  constructor(props) { 
+    super(props)
+
+    this.state = {
+      open: false,
+    };
+  }
+
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -33,37 +38,37 @@ class DashboardSettings extends React.Component {
     modifyWidget('Dashboard', id, true, options);
   }
 
-    render() {
-      const { widget, currentView } = this.props;
-      const { open }  = this.state;
-        return (
-          <div>
-            <Button onClick={() => this.handleOpen()}>
-              <Icon className={classNames(widget.icon, 'icon')} />
-            </Button>
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              open={open}
-              onClose={this.handleClose}
-            >
-              <div className="modal">
-                <Typography variant="title" id="modal-title">
-              Available Widgets
-                </Typography>
-                { (currentView.availableWidgets.length !== 0 ) ? (
-                  <List>
-                    {currentView.availableWidgets.map((widget) => <WidgetInfoItem key={shortid.generate()} name={widget.name} info={widget.info} add={this.updateOptions} id={widget.id} {...widget} />)}
-                  </List>
-                  ) : 
-                  <Typography> You have no available widgets!</Typography>
-                }
+  render() {
+    const { widget, currentView } = this.props;
+    const { open }  = this.state;
+      return (
+        <div>
+          <Button onClick={() => this.handleOpen()}>
+            <Icon className={classNames(widget.icon, 'icon')} />
+          </Button>
+          <Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={open}
+            onClose={this.handleClose}
+          >
+            <div className="modal">
+              <Typography variant="title" id="modal-title">
+            Available Widgets
+              </Typography>
+              { (currentView.availableWidgets.length !== 0 ) ? (
+                <List>
+                  {currentView.availableWidgets.map((widget) => <WidgetInfoItem key={shortid.generate()} name={widget.name} info={widget.info} add={this.updateOptions} id={widget.id} {...widget} />)}
+                </List>
+                ) : 
+                <Typography> You have no available widgets!</Typography>
+              }
 
-              </div>
-            </Modal>
-          </div>
-        );
-    }
+            </div>
+          </Modal>
+        </div>
+      );
+  }
 }
 
 const mapStateToProps = (state) => {

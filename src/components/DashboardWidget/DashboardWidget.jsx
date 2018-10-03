@@ -9,7 +9,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import * as components from '../../utils/views';
 
 
@@ -33,16 +32,13 @@ class DashboardWidget extends React.Component {
         const { anchorEl } = this.state;
         const Component = components[widget.innerComponent];
         return (
-          <Grid container className="dashboard-widget">
+          <Grid item className="dashboard-widget">
             <Paper>
               <Grid 
                 container
-                justify='space-between'
+                justify='flex-end'
                 className="widget-header"
               >
-                <Typography variant="title" className='widget-title'>
-                  {widget.name}
-                </Typography>
                 <IconButton
                   className='icon-button'
                   aria-owns={anchorEl ? 'simple-menu' : null}
@@ -60,7 +56,7 @@ class DashboardWidget extends React.Component {
                   <MenuItem onClick={() => modifyWidget('Dashboard', widget.id, false)}>Remove from Dashboard</MenuItem>
                 </Menu>
               </Grid>
-              <Grid item>
+              <Grid item className="widget-container">
                 <Component widget={widget} {...other} />
               </Grid>
             </Paper>

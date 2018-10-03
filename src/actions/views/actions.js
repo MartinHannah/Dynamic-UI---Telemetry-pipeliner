@@ -19,9 +19,7 @@ export const loadViews = (id) => {
 
 export const loadNewView = (widget) => { 
   return function (dispatch) { 
-    console.log(widget);
     return api.loadWidget(widget).then((widget) => {
-      console.log(widget);
       dispatch(updateCurrentView(widget));
     }).catch((err) => {
       throw (err);

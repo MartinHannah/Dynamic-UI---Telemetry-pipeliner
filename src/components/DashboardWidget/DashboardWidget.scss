@@ -1,17 +1,16 @@
 @import '../../App';
 
 .dashboard-widget { 
-    padding: 5px;
     min-width: 200px;
-
+    margin: $standard-margin;
+    
     .settings { 
         color: #fff;
         font-size: 15px;
     }
 
     .widget-header { 
-        padding: $standard-padding;
-        margin-bottom: $standard-margin;
+        padding: $standard-padding $standard-padding 0 $standard-padding;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
 
@@ -23,6 +22,10 @@
         .icon-button { 
             color: #000;
         }
+    }
+
+    .widget-container { 
+        padding: 0 $standard-padding 0 $standard-padding;
     }
 
 }

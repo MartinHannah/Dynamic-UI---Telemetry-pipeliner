@@ -1,3 +1,10 @@
+const dataTypes = { 
+    "cost": "$", 
+    "energy": "kWh",
+    "co2": "CO2e kg", 
+    "realPower": "kW", 
+}
+
 export const shortenNumber = (number, decPlaces) => { 
     decPlaces = Math.pow(10,decPlaces);
     var abbrev = [ "k", "m", "b", "t" ];
@@ -16,8 +23,29 @@ export const shortenNumber = (number, decPlaces) => {
     return number;    
 }
 
-export const arrayToObject = (array) => array.reduce((obj, item) => {
-    obj[item.name] = item.values[0].value
-    return obj
-  }, {});
+export const calculateAverage = (data, key) => {
+    let avg = data.reduce((acc, curr) => { 
+        return acc + curr[key]
+    }, 0) / data.length;
+    avg = Math.round(avg * 100) / 100;
+    return formatData(avg, key);
+}
+
+export const calculateTotal = (data, key) => {
+    let total = data.reduce((acc, curr) => { 
+        return  acc + curr[key];
+    }, 0)
+    return formatData(total, key);
+}
+
+//Format the data type with the relevant symbol. 
+const formatData = (val, key) => { 
+    val = Math.round(val * 100) / 100;
+    if(key == 'cost') 
+        val = dataTypes[key] + ' ' + val;
+    else { 
+        val = val + ' ' + dataTypes[key];
+    }
+    return val;
+}
   

@@ -12,7 +12,7 @@ const SelectFilter = ({value, filter, options, state}) => {
       >
         {options.map((option) => <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem> )}
       </Select>
-    );
+    );    
 }
 
 SelectFilter.propTypes = { 

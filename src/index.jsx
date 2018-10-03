@@ -4,7 +4,7 @@ import './index.scss';
 import { Provider } from 'react-redux';
 import App from './App';
 import configureStore from './store/configureStore';
-import { loadViews, loadNewView }from './actions/views/actions';
+import { loadViews, loadNewView } from './actions/views/actions';
 
 const store = configureStore();
 store.dispatch(loadViews());

@@ -56,3 +56,8 @@ export const AreaOnlyChart = Loadable({
     loader: () => import('../components/AreaOnlyChart/AreaOnlyChart'),
     loading: LoadingComponent
 });
+
+export const BuildingSummary= Loadable({
+    loader: () => import('../components/BuildingSummary/BuildingSummary'),
+    loading: LoadingComponent
+});

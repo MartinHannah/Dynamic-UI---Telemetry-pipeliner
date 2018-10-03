@@ -14,7 +14,7 @@ class Building extends React.Component {
     }
   }
 
-  componentWillMount(){
+  componentWillMount = () => {
     let buildings; 
     getBuildings().then((result) => {
       buildings = result.data;
@@ -30,15 +30,12 @@ class Building extends React.Component {
         container
         direction='row'
       >
-        {buildings.map((building) => <BuildingItem key={building.name} name={building.name} isCommercial={building.isCommercial} />)}
+        {buildings.map((building) => <BuildingItem key={building.id} name={building.name} type={building.type} id={building.id} />)}
         
       </Grid>
     );
   }
 
-}
-
-Building.propTypes = { 
 }
 
 export default Building;

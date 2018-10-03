@@ -8,12 +8,8 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button'
-//import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
-//import MenuItem from '@material-ui/core/MenuItem';
 import SelectFilter from '../SelectFilter/SelectFilter';
-
-import { arrayToObject } from '../../utils/util';
 
 class  WidgetInfoItem extends React.Component {
 
@@ -25,11 +21,13 @@ class  WidgetInfoItem extends React.Component {
     }
   }
 
-
   componentDidMount = () => { 
     const { widget } = this.props;
     if(widget.userOptions !== undefined) { 
-      const options = arrayToObject(widget.userOptions);
+      const options = widget.userOptions.reduce((obj, item) => {
+        obj[item.name] = item.values[0].value
+        return obj
+      }, {});
       this.setState({ options });
     }
 
@@ -83,18 +81,3 @@ WidgetInfoItem.propTypes = {
   add: PropTypes.func.isRequired,
 }
 export default WidgetInfoItem;
-
-
-/* <Button className="available-widget" onClick={() => this.setOptions(id, add, userOptions)}>
-<Grid 
-  container
-  justify="space-between"
->
-  <Grid item xs={12}><Typography variant="subheading">{name}</Typography></Grid>
-  <Grid item xs={12}><Typography variant="body1">{info}</Typography></Grid>
-</Grid>
-</Button>
-<Select key={option.name} value={options[option.name]} onChange={(event) => this.setOptions(event, option.name)}>
-                    {option.values.map((value) => <MenuItem key={value} value={value}>{value}</MenuItem> )} 
-                  </Select> 
-*/

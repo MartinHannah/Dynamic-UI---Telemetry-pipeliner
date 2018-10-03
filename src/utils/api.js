@@ -8,6 +8,7 @@ const getViews = () => axios.get(`${baseDomain}/routes/`);
 const getWidget = (id) => axios.get(`${baseDomain}/widgets/${id}`);
 const updateWidget = (id, data) => axios.put(`${baseDomain}/widgets/${id}`, data);
 export const getBuildings = () => axios.get(`${baseDomain}/buildings/`);
+export const getBuilding = (id) => axios.get(`${baseDomain}/buildings/${id}`);
 export const getEnergyData = (id) => axios.get(`${baseDomain}/${id}`)
 
 const getComponent = component => components[component];
@@ -52,14 +53,9 @@ export const updateDashboardWidget = async(widgetId, child, add = true, childOpt
 
         if(add) { 
             return getWidget(child).then((wid) => { 
-                let options = wid.data.userOptions.map((option) => ({
-                    [option.name]: childOptions[option.name]
-                })).reduce((obj, item) => { 
-                    obj[item.key] = item.value
-                })
                 let dashboardWidget =  {
                     widget: child, 
-                    options: options
+                    options: childOptions
                 }
                 widget.widgets.push(dashboardWidget);
                 if(!wid.data.allowMultiple) { 
