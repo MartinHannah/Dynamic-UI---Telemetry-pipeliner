@@ -44,7 +44,7 @@ const widgetSource = {
     console.log('begin dragging widget', props);
     return {
       position: props.position,
-      section: props.section,
+      sectionId: props.sectionId,
       widget: props.widget
     };
   }, 
@@ -52,7 +52,7 @@ const widgetSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
     console.log(dropResult, item);
-    if ( dropResult && dropResult.section !== item.section ) {
+    if ( dropResult && dropResult.sectionId !== item.sectionId ) {
 			props.removeWidget(item.position);
 		}
   }
@@ -61,9 +61,10 @@ const widgetSource = {
 const widgetTarget = { 
   hover(props, monitor, component) {
     console.log(props);
+    console.log(monitor.getItem());
     const dragIndex = monitor.getItem().position;
-		const hoverIndex = props.options.position;
-		const sourceListId = monitor.getItem().section;	
+		const hoverIndex = props.position;
+		const sourceListId = monitor.getItem().sectionId;	
  
 		// Don't replace items with themselves
 		if (dragIndex === hoverIndex) {
@@ -97,13 +98,13 @@ const widgetTarget = {
 		}
   console.log(props, sourceListId);
 		// Time to actually perform the action
-		if ( props.options.section === sourceListId ) {
-      console.log('move widget');
+		if ( props.sectionId === sourceListId ) {
 			props.moveWidget(dragIndex, hoverIndex);
 			// Note: we're mutating the monitor item here!
 			// Generally it's better to avoid mutations,
 			// but it's good here for the sake of performance
 			// to avoid expensive index searches.
+      console.log(monitor.getItem());
 			monitor.getItem().index = hoverIndex;
 		}	
   }

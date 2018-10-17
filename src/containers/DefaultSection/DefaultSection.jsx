@@ -2,16 +2,16 @@ import * as React from 'react';
 import './DefaultSection.scss';
 //import { connect } from 'react-redux';
 import * as shortid from 'shortid';
-//import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 //import PropTypes from 'prop-types';
 import DropContainer from '../../components/DropContainer/DropContainer';
 //import { modifyWidgetPosition } from '../../actions/views/actions';
 
 
 type Props = { 
-    // xs: number,
-    // md: number,
-    // direction: string,
+    xs: number,
+    md: number,
+    direction: string,
     list: Array,
     id: number,
     widgets: Array,
@@ -92,13 +92,12 @@ class DefaultSection extends React.Component<Props> {
   }
 
   render (){
-    const {id, list } = this.props;
+    const {id, list, direction, xs, md } = this.props;
     //const sectionWidgets = this.getSectionWidgets();
     return (
-      <div>
-        <h1>Section</h1>
+      <Grid className="section" item direction={direction} xs={xs} md={md}>
         <DropContainer sectionId={id} list={list} />
-      </div>
+      </Grid>
     );
   }
 

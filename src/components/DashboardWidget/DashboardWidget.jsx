@@ -79,14 +79,13 @@ const widgetSource = {
     console.log('begin dragging widget', props);
     return {
       position: props.position,
-      section: props.section,
+      section: props.sectionId,
       widget: props.widget
     };
   }, 
   endDrag(props, monitor) { 
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    console.log(dropResult, item);
     if ( dropResult && dropResult.section !== item.section ) {
 			props.removeWidget(item.position);
 		}
