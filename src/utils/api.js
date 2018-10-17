@@ -29,7 +29,6 @@ export const loadWidget = async (widgetId) => {
         if(widget.component) widget.component = getComponent(widget.component);
       
         let parsedWidgets = [];
-        //If this widget has children -> map through and get the components for inner widgets
         if(widget.widgets) {             
             parsedWidgets = await mapWidgets(widget.widgets);
             widget.widgets = parsedWidgets;
@@ -43,7 +42,7 @@ export const loadWidget = async (widgetId) => {
     })
 }
 
-//Remove the specified child widget from the dashboard
+//Add or Remove a dashboard widget
 export const updateDashboardWidget = async(widgetId, child, add = true, childOptions = "") => { 
     return getWidget(widgetId).then(async(result) => {     
         const widget = result.data;
@@ -71,7 +70,8 @@ export const updateDashboardWidget = async(widgetId, child, add = true, childOpt
     })
 }
 
-export const modifyOptions = async(widgetId, options) => { 
+//set the options on the widget
+export const setWidgetOptions = async(widgetId, options) => { 
     return getWidget(widgetId).then(async(result) => {
         const widget = result.data;
 
@@ -84,6 +84,24 @@ export const modifyOptions = async(widgetId, options) => {
     })
 }
 
+
+export const updateWidgetPosition = async(widgetParent, widget, options) => { 
+    return getWidget(widgetParent).then(async(result) => { 
+        console.log(result);
+        const parent = result.data;
+        parent.widgets.map((wid) => {
+            let opts = wid.options;
+            if(widget === wid.widget)
+                opts = Object.assign(wid.options, options);
+
+            return { 
+                widget: wid.widget,
+                options: opts
+            }
+        });
+        return updateWidget(widgetParent, parent);
+    })
+}
 
 //find the widget in the array by the id and then remove it
 const removeWidget = (array, widgetId) => { 
@@ -104,6 +122,6 @@ const mapWidgets = async (array) => {
         return {
             widget: widgetFinal,
             options: widget.options
-        }
+        };
     }));
 } 

@@ -4,7 +4,7 @@ const initialState = {
   views: [],
   currentView: {
     id: "Dashboard",
-    widgets: [
+    sections: [
     ],
   },
   menuOpen: true,

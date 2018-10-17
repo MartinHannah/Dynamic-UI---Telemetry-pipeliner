@@ -1505,36 +1505,59 @@
   ],
   "routes": [
     {
-      "id": "Dashboard",
-      "path": "/dashboard",
+      "id": "DashboardDraggable",
+      "path": "/dashboarddraggable",
       "exact": true,
       "icon": "fas fa-th-large"
-    },
-    {
-      "id": "Reports",
-      "path": "/reports",
-      "exact": false,
-      "icon": "fas fa-chart-bar"
-    },
-    {
-      "id": "Buildings",
-      "path": "/buildings",
-      "exact": false,
-      "icon": "fas fa-building"
     }
   ],
   "widgets": [
     {
       "id": "Dashboard",
+      "sections": [
+        {
+          "id": 1,
+          "xs": 12,
+          "md": 12
+        },
+        {
+          "id": 2,
+          "xs": 12,
+          "md": 3
+        },
+        {
+          "id": 3,
+          "xs": 12,
+          "md": 6
+        },
+        {
+          "id": 4,
+          "xs": 12,
+          "md": 3
+        },
+        {
+          "id": 5,
+          "xs": 12,
+          "md": 12
+        }
+      ],
       "widgets": [
         {
           "widget": "AddToDashboard",
           "options": {}
         },
         {
-          "widget": "EnergyUsage",
+          "widget": "BuildingSummary",
           "options": {
-            "chartType": "AreaOnlyChart"
+            "buildingId": 148,
+            "dataType": "energy"
+          }
+        },
+        {
+          "widget": "BuildingSummary",
+          "options": {
+            "buildingId": 147,
+            "dataType": "energy"
           }
         }
       ],
@@ -1550,11 +1573,126 @@
           "options": {
             "reportType": "monthly"
           }
+        },
+        {
+          "widget": "BuildingSummary",
+          "options": {
+            "buildingId": 147,
+            "dataType": "energy"
+          }
         }
       ]
     },
     {
+      "id": "DashboardDraggable",
+      "sections": [
+        {
+          "id": 1,
+          "direction": "row",
+          "xs": 12,
+          "md": 12,
+          "widgets": [
+            { "id": 7, "text": "Item 7" },
+            { "id": 8, "text": "Item 8" },
+            { "id": 9, "text": "Item 9" }       
+          ]
+        },
+        {
+          "id": 2,
+          "direction": "column",
+          "xs": 12,
+          "md": 3, 
+          "widgets": [
+            { "id": 4, "text": "Item 4" },
+            { "id": 5, "text": "Item 5" },
+            { "id": 6, "text": "Item 6" }
+          ]
+        },
+        {
+          "id": 3,
+          "direction": "column",
+          "xs": 12,
+          "md": 6,
+          "widgets": [
+            { "id": 1, "text": "Item 1" },
+            { "id": 2, "text": "Item 2" },
+            { "id": 3, "text": "Item 3" }
+          ]
+        },
+        {
+          "id": 4,
+          "direction": "column",
+          "xs": 12,
+          "md": 3,
+          "widgets": [
+            { "id": 10, "text": "Item 10" },
+            { "id": 11, "text": "Item 11" },
+            { "id": 12, "text": "Item 12" }
+          ]
+        },
+        {
+          "id": 5,
+          "direction": "row",
+          "xs": 12,
+          "md": 12,
+          "widgets": [
+            { "id": 13, "text": "Item 13" },
+            { "id": 14, "text": "Item 14" },
+            { "id": 15, "text": "Item 15" }
+          ]
+        }
+      ],
+      "widgets": [
+        {
+          "widget": "BuildingSummary",
+          "options": {
+            "buildingId": 148,
+            "dataType": "cost",
+            "section": 1,
+            "position": 1
+          }
+        },
+        {
+          "widget": "BuildingSummary",
+          "options": {
+            "buildingId": 147,
+            "dataType": "cost",
+            "section": 1,
+            "position": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "DashboardLayout",
+      "component": "DashboardLayout"
+    },
+    {
       "id": "Reports",
+      "sections": [
+        {
+          "id": 1,
+          "direction": "column",
+          "xs": 12
+        },
+        {
+          "id": 2,
+          "direction": "column",
+          "xs": 12,
+          "md": 6
+        },
+        {
+          "id": 3,
+          "direction": "column",
+          "xs": 12,
+          "md": 6
+        },
+        {
+          "id": 4,
+          "direction": "column",
+          "xs": 12
+        }
+      ],
       "widgets": [
         {
           "widget": "Report",
@@ -1564,6 +1702,12 @@
     },
     {
       "id": "Buildings",
+      "sections": [
+        {
+          "id": 1,
+          "xs": 12
+        }
+      ],
       "widgets": [
         {
           "widget": "Building",
@@ -1620,6 +1764,46 @@
         "xAxisDataKey": "time",
         "dataKey": "energy"
       }
+    },
+    {
+      "id": "BuildingSummary",
+      "allowMultiple": true,
+      "name": "Building Summary",
+      "component": "DashboardWidget",
+      "innerComponent": "BuildingSummary",
+      "info": "View building specific data",
+      "userOptions": [
+        {
+          "name": "buildingId",
+          "values": [
+            {
+              "name": "Homebush West",
+              "value": 148
+            },
+            {
+              "name": "Regents Park",
+              "value": 147
+            }
+          ]
+        },
+        {
+          "name": "dataType",
+          "values": [
+            {
+              "name": "kWh",
+              "value": "energy"
+            },
+            {
+              "name": "Co2",
+              "value": "co2"
+            },
+            {
+              "name": "Cost",
+              "value": "cost"
+            }
+          ]
+        }
+      ]
     }
   ],
   "buildings": [

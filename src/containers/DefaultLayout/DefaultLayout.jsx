@@ -22,7 +22,7 @@ const DefaultLayout = ({ views }) => {
                 component={DefaultComponent}
               />
               ))}
-            <Redirect from="/" to="/dashboard" />
+            <Redirect from="/" to="/dashboarddraggable" />
           </Switch>
         </div>
       </main>

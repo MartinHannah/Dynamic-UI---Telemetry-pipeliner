@@ -17,6 +17,7 @@ export const loadViews = (id) => {
   };
 };
 
+//return a loaded widget for the view.
 export const loadNewView = (widget) => { 
   return function (dispatch) { 
     return api.loadWidget(widget).then((widget) => {
@@ -27,6 +28,7 @@ export const loadNewView = (widget) => {
   }
 }
 
+//add or remove widgets from the dashboard
 export const modifyDashboardWidget = (widgetId, child, add, childOptions) => {
   return function (dispatch) {  
     return api.updateDashboardWidget(widgetId, child, add, childOptions).then((widget) => {
@@ -35,13 +37,23 @@ export const modifyDashboardWidget = (widgetId, child, add, childOptions) => {
   }
 }
 
+//set options on a widget and then modify the dashboard widget.
 export const modifyWidgetOptions = (widgetId, options, parent, add) => { 
   return function(dispatch) { 
-    return api.modifyOptions(widgetId, options).then(() => {  
+    return api.setWidgetOptions(widgetId, options).then(() => {  
       dispatch(modifyDashboardWidget(parent, widgetId, add));
     })
   }
 
+}
+
+//Modify the position of a widget
+export const modifyWidgetPosition = (parent, widget, options) => { 
+  return function(dispatch) { 
+    return api.updateWidgetPosition(parent, widget, options).then(() => {
+      dispatch(loadNewView(parent))
+    })
+  }
 }
 
 export const updateCurrentView = (view) => {
