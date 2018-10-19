@@ -1,12 +1,12 @@
 import * as React from 'react';
 import './DefaultSection.scss';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import * as shortid from 'shortid';
+import update from "react-addons-update";
 import Grid from '@material-ui/core/Grid';
 //import PropTypes from 'prop-types';
 import DropContainer from '../../components/DropContainer/DropContainer';
-//import { modifyWidgetPosition } from '../../actions/views/actions';
-
+import * as viewActions from '../../actions/views/actions';
 
 type Props = { 
     xs: number,
@@ -14,16 +14,30 @@ type Props = {
     direction: string,
     list: Array,
     id: number,
-    widgets: Array,
-    modifyPosition: Function
+    widgets: Array
+}
+
+const mapStateToProps = () => { 
+  return { 
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return { 
+    updateSection: () => { 
+        dispatch(viewActions.updateSection());
+      },
+  }
 }
 
 class DefaultSection extends React.Component<Props> { 
   constructor(props) { 
     super(props);
-    
+    this.state = { widgets: props.list };
     this.moveWidget = this.moveWidget.bind(this);
     this.removeWidget = this.removeWidget.bind(this);
+    this.pushWidget = this.pushWidget.bind(this);
   }
 
   getWidget = (section, position) => { 
@@ -34,47 +48,48 @@ class DefaultSection extends React.Component<Props> {
     });
     return widget;
   }
+
+    //This needs to add the widget to a different section.
+  pushWidget = widget => {
+   // console.log(widget);
+    this.setState(
+      update(this.state, {
+        widgets: {
+          $push: [widget]
+        }
+      })
+    );
+  };
+
 //This needs to update the widget section in the db
-  removeWidget = (position) => {
-    const { id, modifyPosition } = this.props;
-    const widget = this.getWidget(id, position);
-    modifyPosition(widget.widget.id, 'DashboardDraggable', );
-
-    
-    // this.setState(
-    //   update(this.state, {
-    //     widgets: {
-    //       $splice: [
-    //         [index, 1]
-    //       ]
-    //     } 
-    //   })
-    // );
+  removeWidget = (index) => {
+    console.log('remove widget');
+   // console.log(index);
+    this.setState(
+      update(this.state, {
+        widgets: {
+          $splice: [[index, 1]]
+        }
+      })
+    );
   }
 
-//This needs to update the widget position in the db
-  moveWidget = (dragIndex, hoverIndex) => { 
-    const { id, modifyPosition } = this.props;
-    console.log(dragIndex, hoverIndex);
-    const widget = this.getWidget(id, dragIndex);
-    const options = {
-      section: id,
-      position: hoverIndex
-    }
-    console.log(options);
-    modifyPosition('DashboardDraggable', widget.widget.id, options);
-    // const dragCard = widgets[dragIndex];
-    // this.setState(
-    //   update(this.state, {
-    //     widgets: {
-    //       $splice: [
-    //         [dragIndex, 1],
-    //         [hoverIndex, 0, dragCard]
-    //       ]
-    //     } 
-    //   })
-    // );
-  }
+  moveWidget = (dragIndex, hoverIndex) => {
+    //console.log('move', dragIndex, hoverIndex);
+    const { widgets } = this.state;
+    const dragCard = widgets[dragIndex];
+
+    this.setState(
+      update(this.state, {
+        widgets: {
+          $splice: [
+            [dragIndex, 1], 
+            [hoverIndex, 0, dragCard]]
+        }
+      })
+    );
+   // console.log(widgets);
+  };
 
   getSectionWidgets = () => { 
     const { id, widgets } = this.props;
@@ -92,15 +107,16 @@ class DefaultSection extends React.Component<Props> {
   }
 
   render (){
-    const {id, list, direction, xs, md } = this.props;
+    const {id, direction, xs, md } = this.props;
+    const { widgets } = this.state;
     //const sectionWidgets = this.getSectionWidgets();
     return (
       <Grid className="section" item direction={direction} xs={xs} md={md}>
-        <DropContainer sectionId={id} list={list} />
+        <DropContainer sectionId={id} list={widgets} removeWidget={this.removeWidget} pushWidget={this.pushWidget} moveWidget={this.moveWidget} />
       </Grid>
     );
   }
 
 }
 
-export default DefaultSection;
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultSection);

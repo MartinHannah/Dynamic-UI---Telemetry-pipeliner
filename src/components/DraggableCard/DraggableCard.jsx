@@ -41,7 +41,7 @@ class DraggableCard extends React.Component<Props> {
 
 const widgetSource = {
   beginDrag(props) {
-    console.log('begin dragging widget', props);
+    //.log('begin dragging widget', props);
     return {
       position: props.position,
       sectionId: props.sectionId,
@@ -51,7 +51,7 @@ const widgetSource = {
   endDrag(props, monitor) { 
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    console.log(dropResult, item);
+    //console.log(dropResult, item);
     if ( dropResult && dropResult.sectionId !== item.sectionId ) {
 			props.removeWidget(item.position);
 		}
@@ -60,8 +60,6 @@ const widgetSource = {
 
 const widgetTarget = { 
   hover(props, monitor, component) {
-    console.log(props);
-    console.log(monitor.getItem());
     const dragIndex = monitor.getItem().position;
 		const hoverIndex = props.position;
 		const sourceListId = monitor.getItem().sectionId;	
@@ -96,16 +94,17 @@ const widgetTarget = {
 		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
 			return;
 		}
-  console.log(props, sourceListId);
+  //console.log(props, sourceListId);
 		// Time to actually perform the action
 		if ( props.sectionId === sourceListId ) {
+      //console.log('move');
 			props.moveWidget(dragIndex, hoverIndex);
 			// Note: we're mutating the monitor item here!
 			// Generally it's better to avoid mutations,
 			// but it's good here for the sake of performance
 			// to avoid expensive index searches.
-      console.log(monitor.getItem());
-			monitor.getItem().index = hoverIndex;
+      //console.log(monitor.getItem());
+			monitor.getItem().position = hoverIndex;
 		}	
   }
 }

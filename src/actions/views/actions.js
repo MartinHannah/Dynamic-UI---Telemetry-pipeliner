@@ -68,3 +68,8 @@ export const toggleMenu = (isOpen) => {
     };
 }
 
+export const updateSection = (section) => { 
+  return function() { 
+    console.log('modify section', section);
+  }
+}

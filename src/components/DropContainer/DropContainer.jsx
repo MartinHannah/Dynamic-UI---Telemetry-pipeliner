@@ -2,7 +2,7 @@ import * as React from "react";
 import "./DropContainer.scss";
 import * as shortid from "shortid";
 import { DropTarget } from "react-dnd";
-import update from "react-addons-update";
+
 //Components
 //import Grid from '@material-ui/core/Grid';
 import ItemTypes from "../../utils/itemTypes";
@@ -11,78 +11,28 @@ import DraggableCard from "../DraggableCard/DraggableCard";
 
 type Props = {
   connectDropTarget: Function,
-  //widgets: Array,
   canDrop: Function,
   isOver: Function,
   list: Array,
-  sectionId: number
+  sectionId: number,
+  removeWidget: Function,
+  moveWidget: Function
 };
 
 class DropContainer extends React.Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { widgets: props.list };
-    this.moveWidget = this.moveWidget.bind(this);
-    this.removeWidget = this.removeWidget.bind(this);
   }
-
-  //This needs to add the widget to a different section.
-  pushWidget = widget => {
-    console.log(widget);
-    this.setState(
-      update(this.state, {
-        widgets: {
-          $push: [widget]
-        }
-      })
-    );
-  };
-
-  removeWidget = index => {
-    console.log(index);
-    this.setState(
-      update(this.state, {
-        widgets: {
-          $splice: [[index, 1]]
-        }
-      })
-    );
-  };
-
-  //   getWidget = (section, position) => {
-  //     console.log(section, position);
-  //         const { widgets } = this.props;
-  //         const widget = widgets.find((widget) => {
-  //             if(widget.options.section == section && widget.options.position == position)
-  //               return widget;
-  //         });
-  //         return widget;
-  //   };
-
-  //Currently only accounting for section one.
-  moveWidget = (dragIndex, hoverIndex) => {
-    const { widgets } = this.state;
-    const dragCard = widgets[dragIndex];
-
-    this.setState(
-      update(this.state, {
-        widgets: {
-          $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]]
-        }
-      })
-    );
-  };
 
   generateKey = () => { 
       shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-!');
       const key = shortid.generate();
-      console.log(key);
+     // console.log(key);
       return key;
   }
 
   render() {
-    const { widgets } = this.state;
-    const { canDrop, isOver, connectDropTarget, sectionId } = this.props;
+    const { canDrop, isOver, connectDropTarget, sectionId, removeWidget, moveWidget, list } = this.props;
     const isActive = canDrop && isOver;
     const style = {
       width: "200px",
@@ -90,18 +40,17 @@ class DropContainer extends React.Component<Props> {
       border: "1px dashed gray"
     };
     const backgroundColor = isActive ? "lightgreen" : "#FFF";
-    console.log(widgets);
     return connectDropTarget(
       <div style={{ ...style, backgroundColor }}>
-        {widgets.map((widget, i) => {
+        {list.map((widget, i) => {
           return (
             <DraggableCard
               key={widget.text}
               position={i}
               sectionId={sectionId}
               widget={widget}
-              removeWidget={this.removeWidget}
-              moveWidget={this.moveWidget}
+              removeWidget={removeWidget}
+              moveWidget={moveWidget}
             />
           );
         })}
@@ -113,13 +62,13 @@ class DropContainer extends React.Component<Props> {
 //     this.generatePositions(section.id)
 //       : null }
 const widgetTarget = {
-  drop(props, monitor, component) {
-    const { id } = props;
+  drop(props, monitor) {
+    const { sectionId, pushWidget } = props;
     const sourceObj = monitor.getItem();
-    console.log(sourceObj);
-    if (id !== sourceObj.sectionId) component.pushWidget(sourceObj.widget);
+   // console.log(sourceObj);
+    if (sectionId !== sourceObj.sectionId) pushWidget(sourceObj.widget);
     return {
-      sectionId: id
+      sectionId: sectionId
     };
   }
 };
