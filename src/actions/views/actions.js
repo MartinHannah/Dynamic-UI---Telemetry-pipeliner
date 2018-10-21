@@ -47,14 +47,6 @@ export const modifyWidgetOptions = (widgetId, options, parent, add) => {
 
 }
 
-//Modify the position of a widget
-export const modifyWidgetPosition = (parent, widget, options) => { 
-  return function(dispatch) { 
-    return api.updateWidgetPosition(parent, widget, options).then(() => {
-      dispatch(loadNewView(parent))
-    })
-  }
-}
 
 export const updateCurrentView = (view) => {
   return {
@@ -69,7 +61,14 @@ export const toggleMenu = (isOpen) => {
 }
 
 export const updateSection = (section) => { 
-  return function() { 
-    console.log('modify section', section);
+  console.log(section);
+  return {
+    type: types.UPDATE_SECTION, section
   }
 }
+
+// function() { 
+    
+//     return api.updateSectionWidgets(parent, section, widgets).then(() => {
+//       console.log('modify section', section);
+//     })

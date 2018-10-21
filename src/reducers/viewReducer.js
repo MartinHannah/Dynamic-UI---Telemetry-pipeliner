@@ -24,6 +24,18 @@ const viewReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         menuOpen: action.isOpen
       });
+    case types.UPDATE_SECTION: 
+      return Object.assign({}, state, { 
+        currentView: {
+          ...state.currentView,
+          sections: state.currentView.sections.map((item, index) => { 
+            if(index == action.section.id) { 
+              return action.section;
+            }
+            return item;
+          })
+        }
+      })
     default:
       return state;
   }

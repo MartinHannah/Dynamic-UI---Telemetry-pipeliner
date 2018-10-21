@@ -85,21 +85,23 @@ export const setWidgetOptions = async(widgetId, options) => {
 }
 
 
-export const updateWidgetPosition = async(widgetParent, widget, options) => { 
-    return getWidget(widgetParent).then(async(result) => { 
-        console.log(result);
-        const parent = result.data;
-        parent.widgets.map((wid) => {
-            let opts = wid.options;
-            if(widget === wid.widget)
-                opts = Object.assign(wid.options, options);
-
-            return { 
-                widget: wid.widget,
-                options: opts
-            }
-        });
-        return updateWidget(widgetParent, parent);
+export const updateSectionWidgets = (parent, sectionId, widgets) => { 
+    return getWidget(parent).then((result) => { 
+        const widget = result.data;
+        console.log(widget);
+        console.log(sectionId);
+        const section = widget.sections.find((element) => { 
+            return element.id === sectionId;
+        })
+        console.log(section);
+        console.log('before: ', section.widgets);
+        console.log(widgets);
+        section.widgets = widgets;
+       // console.log(section.widgets);
+        console.log(widget);
+        widget.sections.splice(section.id, 1, section);
+        console.log(widget);
+        console.log('now need to update parent widget');
     })
 }
 

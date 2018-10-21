@@ -45,7 +45,7 @@ class DropContainer extends React.Component<Props> {
         {list.map((widget, i) => {
           return (
             <DraggableCard
-              key={widget.text}
+              key={`${widget.text}${widget.id}`}
               position={i}
               sectionId={sectionId}
               widget={widget}
@@ -66,7 +66,7 @@ const widgetTarget = {
     const { sectionId, pushWidget } = props;
     const sourceObj = monitor.getItem();
    // console.log(sourceObj);
-    if (sectionId !== sourceObj.sectionId) pushWidget(sourceObj.widget);
+    if (sectionId !== sourceObj.sectionId) pushWidget(sourceObj.widget, sectionId);
     return {
       sectionId: sectionId
     };

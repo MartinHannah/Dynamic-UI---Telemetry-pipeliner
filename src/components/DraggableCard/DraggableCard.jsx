@@ -41,8 +41,9 @@ class DraggableCard extends React.Component<Props> {
 
 const widgetSource = {
   beginDrag(props) {
-    //.log('begin dragging widget', props);
+    console.log('begin dragging widget', props);
     return {
+      id: props.widget.id,
       position: props.position,
       sectionId: props.sectionId,
       widget: props.widget
@@ -51,8 +52,10 @@ const widgetSource = {
   endDrag(props, monitor) { 
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
+    console.log('end drag');
     //console.log(dropResult, item);
     if ( dropResult && dropResult.sectionId !== item.sectionId ) {
+      console.log('remove');
 			props.removeWidget(item.position);
 		}
   }
