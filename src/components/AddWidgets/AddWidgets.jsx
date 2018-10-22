@@ -1,12 +1,10 @@
 import * as React from 'react';
-import './AddToDashboard.scss';
-import PropTypes from 'prop-types'; 
+import './AddWidgets.scss'; 
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import * as shortid from 'shortid';
 //Components
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon'; 
+import AddIcon from '@material-ui/icons/Add';
 import List from '@material-ui/core/List';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +12,12 @@ import WidgetInfoItem from '../WidgetInfoItem/WidgetInfoItem';
 
 import { modifyDashboardWidget } from '../../actions/views/actions';
 
-class DashboardSettings extends React.Component {
+type Props = { 
+  widget: Object,
+  currentView: Object
+}
+
+class AddWidgets extends React.Component<Props> {
 
   constructor(props) { 
     super(props)
@@ -39,12 +42,12 @@ class DashboardSettings extends React.Component {
   }
 
   render() {
-    const { widget, currentView } = this.props;
+    const { currentView } = this.props;
     const { open }  = this.state;
       return (
         <div>
-          <Button onClick={() => this.handleOpen()}>
-            <Icon className={classNames(widget.icon, 'icon')} />
+          <Button variant="fab" color="primary" aria-label="Add" onClick={() => this.handleOpen()}>
+            <AddIcon />
           </Button>
           <Modal
             aria-labelledby="simple-modal-title"
@@ -84,15 +87,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-DashboardSettings.propTypes = { 
-  widget: PropTypes.shape({
-    icon: PropTypes.string.isRequired,
-  }).isRequired,
-  currentView: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    widgets: PropTypes.array.isRequired,
-    availableWidgets: PropTypes.array.isRequired }).isRequired,
-    modifyWidget: PropTypes.func.isRequired
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(AddWidgets);

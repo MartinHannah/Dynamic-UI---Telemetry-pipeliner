@@ -18,7 +18,6 @@ class BuildingSummary extends React.Component {
 
     constructor(props){
         super(props);
-
         this.state = { 
             data: 'No Data',
             buildingName: 'No Building',

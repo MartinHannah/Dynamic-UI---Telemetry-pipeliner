@@ -32,6 +32,7 @@ export const loadNewView = (widget) => {
 export const modifyDashboardWidget = (widgetId, child, add, childOptions) => {
   return function (dispatch) {  
     return api.updateDashboardWidget(widgetId, child, add, childOptions).then((widget) => {
+      console.log(widget);
       dispatch(loadNewView(widget.data.id));
     });
   }

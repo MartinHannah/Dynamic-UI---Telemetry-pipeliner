@@ -1,10 +1,12 @@
 import * as React from "react";
 import "./DropContainer.scss";
-import * as shortid from "shortid";
+import * as randomstring from "randomstring";
 import { DropTarget } from "react-dnd";
+import classNames from 'classnames';
+
 
 //Components
-//import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 import ItemTypes from "../../utils/itemTypes";
 import DraggableCard from "../DraggableCard/DraggableCard";
 //import LayoutPosition from '../../components/DashboardLayout/DashboardLayout';
@@ -24,36 +26,49 @@ class DropContainer extends React.Component<Props> {
     super(props);
   }
 
-  generateKey = () => { 
-      shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-!');
-      const key = shortid.generate();
-     // console.log(key);
-      return key;
-  }
+  generateKeys = num => {
+    let keys = [];
+    for (let i = 0; i < num; i++) {
+      keys.push(
+        randomstring.generate({
+          length: 5,
+          charset: "alphabetic"
+        })
+      );
+    }
+    console.log(keys);
+    return keys;
+  };
 
   render() {
-    const { canDrop, isOver, connectDropTarget, sectionId, removeWidget, moveWidget, list } = this.props;
+    const {
+      canDrop,
+      isOver,
+      connectDropTarget,
+      sectionId,
+      removeWidget,
+      moveWidget,
+      list
+    } = this.props;
     const isActive = canDrop && isOver;
-    const style = {
-      width: "200px",
-      height: "404px",
-      border: "1px dashed gray"
-    };
-    const backgroundColor = isActive ? "lightgreen" : "#FFF";
+    let classes = classNames({ "drop-container": true, 'active-container': isActive });
     return connectDropTarget(
-      <div style={{ ...style, backgroundColor }}>
-        {list.map((widget, i) => {
-          return (
-            <DraggableCard
-              key={`${widget.text}${widget.id}`}
-              position={i}
-              sectionId={sectionId}
-              widget={widget}
-              removeWidget={removeWidget}
-              moveWidget={moveWidget}
-            />
-          );
-        })}
+      <div className={classes}>
+        {list !== undefined
+          ? list.map((widget, i) => {
+              return (
+                <Grid item key={widget.options.id} className="draggable-card">
+                  <DraggableCard
+                    position={i}
+                    sectionId={sectionId}
+                    widget={widget}
+                    removeWidget={removeWidget}
+                    moveWidget={moveWidget}
+                  />
+                </Grid>
+              );
+            })
+          : null}
       </div>
     );
   }
@@ -65,8 +80,9 @@ const widgetTarget = {
   drop(props, monitor) {
     const { sectionId, pushWidget } = props;
     const sourceObj = monitor.getItem();
-   // console.log(sourceObj);
-    if (sectionId !== sourceObj.sectionId) pushWidget(sourceObj.widget, sectionId);
+    // console.log(sourceObj);
+    if (sectionId !== sourceObj.sectionId)
+      pushWidget(sourceObj.widget, sectionId);
     return {
       sectionId: sectionId
     };

@@ -32,8 +32,8 @@ export const Building = Loadable({
     loading: LoadingComponent
 });
 
-export const AddToDashboard = Loadable({
-    loader: () => import('../components/AddToDashboard/AddToDashboard'),
+export const AddWidgets = Loadable({
+    loader: () => import('../components/AddWidgets/AddWidgets'),
     loading: LoadingComponent
 });
 

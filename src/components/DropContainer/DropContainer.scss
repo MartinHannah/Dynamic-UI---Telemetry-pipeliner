@@ -1,10 +1,18 @@
-.box { 
-    width: 200px;
-    height: 404px;
-    border: 1px dashed gray;
+.drop-container { 
+    display:  inherit;
+    flex-grow: inherit;
+    flex-direction: inherit;
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+
+    .draggable-card { 
+        margin: 5px;
+    }
+
+
 }
 
-.section { 
-    display: flex;
-    
+.active-container { 
+    background-color: red;
 }

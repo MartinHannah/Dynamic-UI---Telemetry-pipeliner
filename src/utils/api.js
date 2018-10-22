@@ -34,6 +34,17 @@ export const loadWidget = async (widgetId) => {
             widget.widgets = parsedWidgets;
         }
 
+        if(widget.sections) { 
+            for(let i = 0; i < widget.sections.length; i++) { 
+                console.log(widget.sections[i].widgets);
+                if(widget.sections[i].widgets !== undefined) { 
+                    parsedWidgets = await mapWidgets(widget.sections[i].widgets);
+                    widget.sections[i].widgets = parsedWidgets;
+                }
+
+            }
+        }
+
         if(widget.availableWidgets) { 
             parsedWidgets = await mapWidgets(widget.availableWidgets);
             widget.availableWidgets = parsedWidgets;
@@ -46,17 +57,18 @@ export const loadWidget = async (widgetId) => {
 export const updateDashboardWidget = async(widgetId, child, add = true, childOptions = "") => { 
     return getWidget(widgetId).then(async(result) => {     
         const widget = result.data;
-        //if there are no child widgets, do nothing for now
-        if(!widget.widgets) 
-            return;
+        console.log(widget);
 
         if(add) { 
+            console.log('add');
             return getWidget(child).then((wid) => { 
+                console.log(wid);
                 let dashboardWidget =  {
                     widget: child, 
                     options: childOptions
                 }
-                widget.widgets.push(dashboardWidget);
+                //Need to add it to the right sections instead... 
+                widget.sections[0].widgets.push(dashboardWidget);
                 if(!wid.data.allowMultiple) { 
                     widget.availableWidgets = removeWidget(widget.availableWidgets, child);
                 }
@@ -64,7 +76,7 @@ export const updateDashboardWidget = async(widgetId, child, add = true, childOpt
             }); 
             
         } else { 
-            widget.widgets = removeWidget(widget.widgets, child);
+           // widget.sections = removeWidget(widget.widgets, child);
             return updateWidget(widgetId, widget);
         }
     })

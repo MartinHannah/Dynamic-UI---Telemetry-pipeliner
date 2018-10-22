@@ -14,7 +14,8 @@ type Props = {
     direction: string,
     list: Array,
     id: number,
-   updateSection: Function
+    updateSection: Function,
+    justify: string
 }
 
 const mapStateToProps = () => { 
@@ -38,11 +39,6 @@ class DefaultSection extends React.Component<Props> {
     this.moveWidget = this.moveWidget.bind(this);
     this.removeWidget = this.removeWidget.bind(this);
     this.pushWidget = this.pushWidget.bind(this);
-  }
-
-  componentWillUnmount(){
-    //console.log('update');
-    //this.sectionUpdate();
   }
 
   // getWidget = (section, position) => { 
@@ -98,9 +94,9 @@ class DefaultSection extends React.Component<Props> {
   //  console.log(widgets);
   //   this.sectionUpdate(widgets);
     const { id } = this.props;
-    console.log('remove', id);
+    console.log('remove, section: ', id, 'item ', index);
     this.setState(this.rWidget(this.state, index), () =>{
-      //this.sectionUpdate();
+      this.sectionUpdate();
     })
 
    // console.log(index);
@@ -166,12 +162,12 @@ class DefaultSection extends React.Component<Props> {
   //   return positions;
   // }
 
-  render (){
-    const {id, direction, xs, md } = this.props;
+  render () {
+    const {id, direction, xs, md, justify } = this.props;
     const { widgets } = this.state;
     //const sectionWidgets = this.getSectionWidgets();
     return (
-      <Grid className="section" item direction={direction} xs={xs} md={md}>
+      <Grid className="widget-section" container item direction={direction} xs={xs} md={md} justify={justify}>
         <DropContainer sectionId={id} list={widgets} removeWidget={this.removeWidget} pushWidget={this.pushWidget} moveWidget={this.moveWidget} />
       </Grid>
     );

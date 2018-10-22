@@ -1,39 +1,77 @@
 import React from 'react';
 import compose from 'recompose/compose';
+import { connect } from 'react-redux';
 import { DragSource, DropTarget } from 'react-dnd';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import MoreVert from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { modifyDashboardWidget } from '../../actions/views/actions';
 import ItemTypes from '../../utils/itemTypes';
 
-const style = {
-	border: '1px dashed gray',
-	padding: '0.5rem 1rem',
-	margin: '.5rem',
-	backgroundColor: 'white',
-};
 
 type Props = { 
   connectDropTarget: Function,
   connectDragSource: Function,
   isDragging: boolean,
   widget: Object,
+  modifyWidget: Function
 }
 
 class DraggableCard extends React.Component<Props> { 
   constructor(props) { 
     super(props);
     this.widgetRef = React.createRef();
-    // this.state = {
-    //    anchorEl: null,
-    //  };
+    this.state = {
+       anchorEl: null,
+     };
   }
 
-  render() { 
-    const { widget, isDragging, connectDragSource, connectDropTarget} = this.props;
-     // const { anchorEl } = this.state;
-    const opacity = isDragging ? 0 : 1;
+    handleClick = (event) => {
+      this.setState({ anchorEl: event.currentTarget });
+    };
+  
+    handleClose = () => {
+      this.setState({ anchorEl: null });
+    };
 
+  render() { 
+    const { widget, isDragging, connectDragSource, connectDropTarget, modifyWidget, removeWidget, position, ...other} = this.props;
+    const { anchorEl } = this.state;
+    const opacity = isDragging ? 0 : 1;
     return connectDragSource(connectDropTarget(
-      <div style={{ ...style, opacity }} ref={(node) => (this.widgetRef = node)}>
-        {widget.text}
+      <div className='draggable-card' style={{ opacity }} ref={(node) => (this.widgetRef = node)}>
+        <Paper>
+          { widget.options.isRemovable ?
+            (
+              <Grid
+                container
+                justify='flex-end'
+                className="widget-header"
+              >
+                <IconButton
+                  className='icon-button'
+                  aria-owns={anchorEl ? 'simple-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                >
+                  <MoreVert />
+                </IconButton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={() => this.handleClose(widget.id)}
+                >
+                  <MenuItem onClick={() => removeWidget(position)}>Remove from Dashboard</MenuItem>
+                </Menu>
+              </Grid>
+            ) 
+            : null }
+          <widget.widget.component widget={widget.widget} options={widget.options} {...other} />
+        </Paper>
       </div>
     ));
   }
@@ -112,7 +150,21 @@ const widgetTarget = {
   }
 }
 
+const mapStateToProps = () => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return { 
+      modifyWidget: (widgetId, child, add) => { 
+        dispatch(modifyDashboardWidget(widgetId, child, add));
+      }
+    }
+  }
+
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   DropTarget(ItemTypes.DASHBOARDWIDGET, widgetTarget, (connect)=> ({
     connectDropTarget: connect.dropTarget()
   })),

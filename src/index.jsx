@@ -8,7 +8,7 @@ import { loadViews, loadNewView } from './actions/views/actions';
 
 const store = configureStore();
 store.dispatch(loadViews());
-store.dispatch(loadNewView('DashboardDraggable'));
+store.dispatch(loadNewView('Dashboard'));
 
 ReactDOM.render(
   <Provider store={store}><App /></Provider>

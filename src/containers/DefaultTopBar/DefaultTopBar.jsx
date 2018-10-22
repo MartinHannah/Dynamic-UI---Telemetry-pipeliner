@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './DefaultTopBar.scss';
-import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,7 +9,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import * as viewActions from '../../actions/views/actions';
 
-const DefaultTopBar = ({ menuOpen, toggleMenu, currentView }) => { 
+type Props = { 
+  currentView: Object,
+  menuOpen: boolean,
+  toggleMenu: Function
+}
+
+const DefaultTopBar = (props: Props) => { 
+  const { menuOpen, toggleMenu, currentView } = props;
   return (
     <AppBar
       position="absolute"
@@ -46,13 +52,5 @@ const mapDispatchToProps = (dispatch) => {
     },
   }
 }
-
-DefaultTopBar.propTypes = {
-  currentView: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    widgets: PropTypes.array.isRequired }).isRequired,
-    menuOpen: PropTypes.bool.isRequired,
-    toggleMenu: PropTypes.func.isRequired
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DefaultTopBar);
