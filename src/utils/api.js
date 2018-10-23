@@ -36,7 +36,6 @@ export const loadWidget = async (widgetId) => {
 
         if(widget.sections) { 
             for(let i = 0; i < widget.sections.length; i++) { 
-                console.log(widget.sections[i].widgets);
                 if(widget.sections[i].widgets !== undefined) { 
                     parsedWidgets = await mapWidgets(widget.sections[i].widgets);
                     widget.sections[i].widgets = parsedWidgets;

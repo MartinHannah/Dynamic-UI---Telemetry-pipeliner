@@ -12,20 +12,32 @@ import Grid from '@material-ui/core/Grid';
 //import DropContainer from '../../components/DropContainer/DropContainer';
 import DefaultSection from '../DefaultSection/DefaultSection';
 import * as components from '../../utils/views';
+import * as viewActions from '../../actions/views/actions';
 //import LayoutPosition from '../../components/DashboardLayout/DashboardLayout';
 
 type Props = { 
-  currentView: Object
+  currentView: Object,
+  currentSections: Array,
+  updateSectionState: Function
 }
 
 class DefaultComponent extends React.Component<Props> { 
   constructor(props) { 
     super(props);
 
+    this.updateSection = this.updateSection.bind(this);
   }
-  componentWillMount(){}
 
-  renderComponents() { 
+  updateSection = (widgets, id) => { 
+    const { updateSectionState  } = this.props;
+    let newSection = { 
+      id: id,
+      widgets: widgets
+    }
+    updateSectionState(newSection);
+  }
+
+  renderComponents = () => { 
     const { currentView } = this.props;
     if(currentView.additionalFunctionality === undefined) return null;
     
@@ -38,25 +50,16 @@ class DefaultComponent extends React.Component<Props> {
     return additional;
   }
 
+
   render() { 
-    const {currentView} = this.props;
-    
-    const style = {
-			display: "flex",
-			justifyContent: "space-around",
-			paddingTop: "20px"
-    }
-  
-    // const sections = currentView.sections.map((section) => { return(
-    //   <DefaultSection key={shortid.generate()} id={section.id} direction={section.direction} xs={section.xs} md={section.md} list={section.widgets} />
-    //       )});
+    const {currentSections} = this.props;
 
     return (
       <div>
-        <Grid container className='layout-container' style={{...style}}>
-          { currentView.sections.map((section) => <DefaultSection key={shortid.generate()} id={section.id} direction={section.direction} xs={section.xs} md={section.md} list={section.widgets} />)}
+        <Grid container className='layout-container'>
+          { currentSections.map((section) => <DefaultSection key={shortid.generate()} id={section.id} direction={section.direction} xs={section.xs} md={section.md} list={section.widgets} updateSection={this.updateSection} />)}
         </Grid>
-        { this.renderComponents()}
+        { this.renderComponents() }
       </div>
     );
   }
@@ -64,12 +67,16 @@ class DefaultComponent extends React.Component<Props> {
 
 const mapStateToProps = (state) => {
   return {
-    currentView: state.viewReducer.currentView
+    currentView: state.viewReducer.currentView,
+    currentSections: state.viewReducer.currentSections
   };
 }
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
   return { 
+    updateSectionState: (parent, section, widgets) => { 
+        dispatch(viewActions.updateSection(parent, section, widgets));
+      },
   }
 }
 
@@ -77,18 +84,3 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   DragDropContext(MultiBackend(HTML5toTouch))
   )(DefaultComponent);
-
-//        {currentView.widgets.map((widget) => widget.options.section == section.id ? <widget.widget.component key={shortid.generate()} {...widget} /> : null)}
-//{currentView.widgets.map((widget, index) => widget.options.section == section.id ? <LayoutPosition position={index} {...widget} /> : null)}
-//section.widgets.map((widget, index) => <LayoutPosition key={shortid.generate()} position={index} widgets={section.widgets} />
-
-// {currentView.sections.map((section) => 
-//   (
-//     <DefaultSection key={shortid.generate()} id={section.id} direction={section.direction} xs={section.xs} md={section.md} widgets={currentView.widgets} />
-//  ))}
-
-/* <DropContainer key={shortid.generate()} id={currentView.sections[0].id} list={currentView.sections[0].widgets} />
-        <DropContainer key={shortid.generate()} id={currentView.sections[1].id} list={currentView.sections[1].widgets} />
-        <DropContainer key={shortid.generate()} id={currentView.sections[2].id} list={currentView.sections[2].widgets} />
-        <DropContainer key={shortid.generate()} id={currentView.sections[3].id} list={currentView.sections[3].widgets} />
-        <DropContainer key={shortid.generate()} id={currentView.sections[4].id} list={currentView.sections[4].widgets} /> */

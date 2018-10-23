@@ -5,17 +5,32 @@
     z-index: 1;
     position: relative;
     display: flex;
+
+    .content { 
+        flex-grow: 1;
+        padding: 10px;
+        height: 100vh;
+        margin-top: 25px;
+        overflow: auto;
+
+    }
+    
+    .spacer { 
+        padding-top: 50px;
+        min-height: $toolbar-height;
+    }
+    
+    .sidebar-closed { 
+        margin-left: $sidebarWidth !important;
+        width: calc(100% - #{$sidebarWidth}) !important;
+        transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,margin 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    }
+
+    .sidebar-open { 
+        margin-left: $sidebarClosedWidth !important;
+    }
+
 }
 
-.content { 
-    flex-grow: 1;
-    padding: 10px;
-    height: 100vh;
-    margin-top: 25px;
-    overflow: auto;
-}
 
-.spacer { 
-    padding-top: 50px;
-    min-height: $toolbar-height;
-}
+

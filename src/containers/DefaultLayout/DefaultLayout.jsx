@@ -1,16 +1,24 @@
 import * as React from 'react';
 import './DefaultLayout.scss';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from "react-router-dom";
-import { DefaultTopBar, DefaultComponent, DefaultSideBar } from '../../utils/views';
+import DefaultTopBar from '../DefaultTopBar/DefaultTopBar';
+import DefaultSideBar from '../DefaultSideBar/DefaultSideBar';
+import DefaultComponent from '../DefaultComponent/DefaultComponent';
 
-const DefaultLayout = ({ views }) => { 
+type Props = { 
+  views: Array,
+  menuOpen: boolean
+}
+
+const DefaultLayout = (props: Props) => { 
+  const { views, menuOpen } = props;
   return (
     <div className='root'>
-      <DefaultTopBar />
       <DefaultSideBar />
-      <main className='content'>
+      <DefaultTopBar /> 
+      <main className={classNames('content', menuOpen && 'sidebar-closed', !menuOpen && 'sidebar-open')}>
         <div className='spacer'>
           <Switch>
             {views.map((view) => (
@@ -31,19 +39,9 @@ const DefaultLayout = ({ views }) => {
 }
 const mapStateToProps = (state) => {
     return {
-      views: state.viewReducer.views
+      views: state.viewReducer.views,
+      menuOpen: state.viewReducer.menuOpen
     };
   }
-
-DefaultLayout.propTypes = {
-    views: PropTypes.arrayOf(
-      PropTypes.shape({
-        path: PropTypes.string.isRequired,
-        id: PropTypes.string.isRequired,
-        exact: PropTypes.bool.isRequired,
-        icon: PropTypes.string.isRequired
-      })
-    ).isRequired
-};
 
 export default connect(mapStateToProps)(DefaultLayout);

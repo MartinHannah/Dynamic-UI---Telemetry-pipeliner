@@ -23,8 +23,8 @@ const DefaultSideBar = ({ views, menuOpen, toggleMenu, loadNewView }) => {
         open={menuOpen}
       >
         <div className='toolbar'>
-          <IconButton onClick={() => toggleMenu(false)}>
-            {menuOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          <IconButton onClick={() => toggleMenu(!menuOpen)}>
+            { !menuOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
         <List>

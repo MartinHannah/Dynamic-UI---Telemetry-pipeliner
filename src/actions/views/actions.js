@@ -67,9 +67,3 @@ export const updateSection = (section) => {
     type: types.UPDATE_SECTION, section
   }
 }
-
-// function() { 
-    
-//     return api.updateSectionWidgets(parent, section, widgets).then(() => {
-//       console.log('modify section', section);
-//     })

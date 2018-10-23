@@ -1,12 +1,15 @@
+import update from 'react-addons-update';
 import * as types from '../actions/views/actionTypes';
+
 
 const initialState = {
   views: [],
   currentView: {
     id: "Dashboard",
-    sections: [
-    ],
   },
+  currentSections: [
+
+  ],
   menuOpen: true,
 };
 
@@ -19,23 +22,20 @@ const viewReducer = (state = initialState, action) => {
     case types.UPDATE_CURRENT_VIEW:
       return Object.assign({}, state, {
         currentView: action.view,
+        currentSections: action.view.sections,
       });
     case types.MENU_OPEN_CLOSE: 
       return Object.assign({}, state, {
         menuOpen: action.isOpen
       });
     case types.UPDATE_SECTION: 
-      return Object.assign({}, state, { 
-        currentView: {
-          ...state.currentView,
-          sections: state.currentView.sections.map((item, index) => { 
-            if(index == action.section.id) { 
-              return action.section;
+      return update(state, {
+        currentSections: {
+            [action.section.id]: {
+              widgets: { $set: action.section.widgets}
             }
-            return item;
-          })
         }
-      })
+      });
     default:
       return state;
   }
