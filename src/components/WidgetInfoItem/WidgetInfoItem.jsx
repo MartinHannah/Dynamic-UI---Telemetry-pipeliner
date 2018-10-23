@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './WidgetInfoItem.scss';
-import PropTypes from 'prop-types'; 
 //Components
 import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -11,7 +10,12 @@ import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl';
 import SelectFilter from '../SelectFilter/SelectFilter';
 
-class  WidgetInfoItem extends React.Component {
+type Props = {
+  widget: Object,
+  add: Function
+}
+
+class  WidgetInfoItem extends React.Component<Props> {
 
   constructor(props) { 
     super(props);
@@ -71,13 +75,4 @@ class  WidgetInfoItem extends React.Component {
   
 }
 
-WidgetInfoItem.propTypes = {
-  widget: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    info: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    userOptions: PropTypes.shape.isRequired
-  }).isRequired,
-  add: PropTypes.func.isRequired,
-}
 export default WidgetInfoItem;

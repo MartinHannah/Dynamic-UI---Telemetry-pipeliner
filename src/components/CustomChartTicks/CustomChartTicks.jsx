@@ -1,11 +1,16 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import PropTypes from 'prop-types'; 
 
 import { shortenNumber } from '../../utils/util';
 
+type Props = { 
+  payload: Object,
+  x: number,
+  y: number,
+}
 
-export const DayDateXAxis = ({payload, x, y }) => {
+export const DayDateXAxis = (props: Props) => {
+    const {payload, x, y } = props;
     let date = moment.unix(payload.value).format('Do');
     let day = moment.unix(payload.value).format('ddd');
     const textFill = (day == 'Sat' || day == 'Sun') ? '#EF5736' : '#000';
@@ -34,13 +39,15 @@ export const DayDateXAxis = ({payload, x, y }) => {
     );
   };
 
-  DayDateXAxis.propTypes = { 
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    payload: PropTypes.shape.isRequired,
-  }
+  type PropsY = { 
+  payload: Object,
+  x: number,
+  y: number,
+  xPos: number
+}
 
-  export const FormatNumbersYAxis = ({payload, x, y, xPos}) => {
+  export const FormatNumbersYAxis = (props: PropsY) => {
+    const {payload, x, y, xPos} = props;
     const format = shortenNumber(payload.value, 1);
     return (
       <g>
@@ -55,11 +62,4 @@ export const DayDateXAxis = ({payload, x, y }) => {
         </text>
       </g>
     );
-  }
-  
-  FormatNumbersYAxis.propTypes = {
-    xPos: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    payload: PropTypes.isRequired,
   }

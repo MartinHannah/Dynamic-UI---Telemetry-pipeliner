@@ -1,14 +1,18 @@
 import * as React from 'react';
 import './AreaBarChart.scss';
-import PropTypes from 'prop-types'; 
 
 //Components
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, CartesianGrid, Area, Bar } from 'recharts';
 import { FormatNumbersYAxis, DayDateXAxis } from '../CustomChartTicks/CustomChartTicks';
 import { EnergyCostTooltip } from '../CustomChartTooltips/CustomChartTooltips';
 
+type Props = {
+  options: Object,
+  data: Object
+}
 
-const AreaBarChart = ({options , data }) => { 
+const AreaBarChart = (props: Props) => { 
+  const { data, options } = props;
   return (
     <ResponsiveContainer 
       className="area-bar-chart" 
@@ -25,14 +29,6 @@ const AreaBarChart = ({options , data }) => {
       </ComposedChart>
     </ResponsiveContainer>
   );
-}
-
-AreaBarChart.propTypes = { 
-  options: PropTypes.shape({
-    xAxisDataKey: PropTypes.string.isRequired,
-    dataKey: PropTypes.string.isRequired
-  }).isRequired,
-  data: PropTypes.shape.isRequired
 }
 
 export default AreaBarChart;

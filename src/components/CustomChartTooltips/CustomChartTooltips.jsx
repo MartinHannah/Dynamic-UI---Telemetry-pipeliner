@@ -1,10 +1,16 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import './CustomChartTooltips.scss';
-import PropTypes from 'prop-types'; 
 import { shortenNumber } from '../../utils/util';
 
-export const EnergyCostTooltip = ({payload, label, active}) => { 
+type Props = { 
+  payload: Object,
+  label: string,
+  active: boolean
+}
+
+export const EnergyCostTooltip = (props: Props) => { 
+  const {payload, label, active} = props;
     if(active) { 
       const time = moment.unix(label).format('ddd Do');
       const energy = shortenNumber(payload[0].payload.energy, 3);
@@ -19,12 +25,7 @@ export const EnergyCostTooltip = ({payload, label, active}) => {
       );
     }
     return null;
-  }
-  
-EnergyCostTooltip.propTypes = { 
-    payload: PropTypes.isRequired,
-    label: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired
 }
+
 
 export default EnergyCostTooltip;

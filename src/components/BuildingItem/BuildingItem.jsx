@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import './BuildingItem.scss';
 import * as shortid from 'shortid';
 
@@ -19,7 +18,14 @@ const types = [
   { name: "Average Monthly Cost", value: "cost"}, 
   { name: "Average Monthly Usage", value: "energy"}
 ]
-class BuildingItem extends React.Component {
+
+type Props = { 
+  name: string,
+  type: string,
+  id: number
+}
+
+class BuildingItem extends React.Component<Props> {
 
   constructor(props) { 
     super(props);
@@ -84,12 +90,6 @@ class BuildingItem extends React.Component {
     );
   }
     
-}
-
-BuildingItem.propTypes = { 
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
 }
 
 export default BuildingItem;

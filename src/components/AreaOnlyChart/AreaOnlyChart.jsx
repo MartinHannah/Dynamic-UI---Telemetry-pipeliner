@@ -6,8 +6,13 @@ import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, CartesianGrid, A
 import { FormatNumbersYAxis, DayDateXAxis } from '../CustomChartTicks/CustomChartTicks';
 import { EnergyCostTooltip } from '../CustomChartTooltips/CustomChartTooltips';
 
+type Props = { 
+  options: Object,
+  data: Object
+}
 
-const AreaOnlyChart = ({options, data}) => {
+const AreaOnlyChart = (props: Props) => {
+  const {options, data} = props;
     return ( 
       <ResponsiveContainer
         className="area-chart"

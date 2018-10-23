@@ -37,11 +37,6 @@ export const AddWidgets = Loadable({
     loading: LoadingComponent
 });
 
-export const DashboardWidget = Loadable({
-    loader: () => import('../components/DashboardWidget/DashboardWidget'),
-    loading: LoadingComponent
-});
-
 export const AreaBarChart = Loadable({
     loader: () => import('../components/AreaBarChart/AreaBarChart'),
     loading: LoadingComponent

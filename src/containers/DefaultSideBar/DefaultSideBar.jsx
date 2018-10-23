@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './DefaultSideBar.scss';
-import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 //Components
@@ -12,7 +11,15 @@ import IconButton from '@material-ui/core/IconButton';
 import SidebarItem from '../../components/SidebarItem/SidebarItem';
 import * as viewActions from '../../actions/views/actions';
 
-const DefaultSideBar = ({ views, menuOpen, toggleMenu, loadNewView }) => { 
+type Props = {
+  views: Array,
+  menuOpen: boolean,
+  toggleMenu: Function, 
+  loadNewView: Function
+}
+
+const DefaultSideBar = (props: Props) => { 
+  const { views, menuOpen, toggleMenu, loadNewView } = props;
   return (
     <div>
       <Drawer
@@ -53,17 +60,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-DefaultSideBar.propTypes = {
-  views: PropTypes.arrayOf(
-    PropTypes.shape({
-      path: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-      exact: PropTypes.bool.isRequired,
-      icon: PropTypes.string.isRequired
-    })
-  ).isRequired,
-    menuOpen: PropTypes.bool.isRequired,
-    toggleMenu: PropTypes.func.isRequired,
-    loadNewView: PropTypes.func.isRequired
-}
 export default connect(mapStateToProps, mapDispatchToProps)(DefaultSideBar);

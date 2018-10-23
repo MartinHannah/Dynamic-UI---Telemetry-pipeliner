@@ -1,20 +1,19 @@
 import * as React from 'react';
 import './BuildingSummary.scss';
-import PropTypes from 'prop-types'; 
 
 //Components
 import Grid from '@material-ui/core/Grid';
-//import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 
 import { getEnergyData, getBuilding } from '../../utils/api';
 import { calculateTotal } from '../../utils/util';
 
+type Props = { 
+    options: Object
+}
 
-
-
-class BuildingSummary extends React.Component { 
+class BuildingSummary extends React.Component<Props> { 
 
     constructor(props){
         super(props);
@@ -59,13 +58,6 @@ class BuildingSummary extends React.Component {
           </Grid>
         );
     }
-}
-
-BuildingSummary.propTypes = { 
-    options: PropTypes.shape({
-        buildingId: PropTypes.number.isRequired,
-        dataType: PropTypes.string.isRequired
-    }).isRequired
 }
 
 export default BuildingSummary;

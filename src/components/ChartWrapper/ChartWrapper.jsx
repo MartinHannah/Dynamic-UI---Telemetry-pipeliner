@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './ChartWrapper.scss';
-import PropTypes from 'prop-types'; 
 
 //Components
 import FormControl from '@material-ui/core/FormControl';
@@ -10,8 +9,12 @@ import SelectFilter from '../SelectFilter/SelectFilter';
 import * as components from '../../utils/views';
 import { getBuildings, getEnergyData  } from '../../utils/api';
 
+type Props = { 
+    widget: Object,
+    options: Object
+}
 
-class ChartWrapper extends React.Component { 
+class ChartWrapper extends React.Component<Props> { 
 
     state = {
         data: [],
@@ -70,11 +73,5 @@ class ChartWrapper extends React.Component {
         );
     }
 }
-
-ChartWrapper.propTypes = { 
-    widget: PropTypes.shape.isRequired,
-    options: PropTypes.shape.isRequired
-}
-
 
 export default ChartWrapper;
