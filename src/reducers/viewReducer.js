@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import * as types from '../actions/views/actionTypes';
+import * as types from '../actions/actionTypes';
 
 
 const initialState = {

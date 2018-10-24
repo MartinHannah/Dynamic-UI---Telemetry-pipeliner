@@ -10,6 +10,7 @@ const updateWidget = (id, data) => axios.put(`${baseDomain}/widgets/${id}`, data
 export const getBuildings = () => axios.get(`${baseDomain}/buildings/`);
 export const getBuilding = (id) => axios.get(`${baseDomain}/buildings/${id}`);
 export const getEnergyData = (id) => axios.get(`${baseDomain}/${id}`)
+export const getChartData  = (data) => axios.get(`${baseDomain}/${data}/`);
 
 const getComponent = component => components[component];
 

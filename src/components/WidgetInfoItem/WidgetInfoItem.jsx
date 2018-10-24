@@ -15,13 +15,14 @@ type Props = {
   add: Function
 }
 
-class  WidgetInfoItem extends React.Component<Props> {
+class WidgetInfoItem extends React.Component<Props> {
 
   constructor(props) { 
     super(props);
 
     this.state = { 
-      options: {}
+      options: {
+      }
     }
   }
 
@@ -32,7 +33,7 @@ class  WidgetInfoItem extends React.Component<Props> {
         obj[item.name] = item.values[0].value
         return obj
       }, {});
-      this.setState({ options });
+      this.setState({options});
     }
 
   }
@@ -49,6 +50,7 @@ class  WidgetInfoItem extends React.Component<Props> {
   render() { 
     const { widget, add } = this.props;
     const { options } = this.state;
+    console.log(options);
     return (
       <div>
         <ExpansionPanel>

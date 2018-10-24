@@ -57,7 +57,7 @@ export const BuildingSummary = Loadable({
     loading: LoadingComponent
 });
 
-export const DashboardLayout = Loadable({
-    loader: () => import('../components/DashboardLayout/DashboardLayout'),
+export const DataGrid = Loadable({
+    loader: () =>  import('../components/DataGrid/DataGrid'),
     loading: LoadingComponent
 });

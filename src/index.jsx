@@ -8,7 +8,7 @@ import { loadViews, loadNewView } from './actions/views/actions';
 
 const store = configureStore();
 store.dispatch(loadViews());
-store.dispatch(loadNewView('Dashboard'));
+store.dispatch(loadNewView('Customers'));
 
 ReactDOM.render(
   <Provider store={store}><App /></Provider>

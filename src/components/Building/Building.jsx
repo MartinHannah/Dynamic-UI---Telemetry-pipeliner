@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { getBuildings } from '../../utils/api';
 import BuildingItem from '../BuildingItem/BuildingItem';
 
+
 class Building extends React.Component {
 
   constructor(props) { 

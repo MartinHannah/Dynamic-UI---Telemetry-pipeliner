@@ -1505,10 +1505,16 @@
   ],
   "routes": [
     {
-      "id": "DashboardDraggable",
-      "path": "/dashboarddraggable",
+      "id": "Customers",
+      "path": "/customers",
       "exact": true,
       "icon": "fas fa-th-large"
+    },
+    {
+      "id": "Users",
+      "path": "/users",
+      "exact": false,
+      "icon": "fas fa-chart-bar"
     }
   ],
   "widgets": [
@@ -1516,49 +1522,111 @@
       "id": "Dashboard",
       "sections": [
         {
-          "id": 1,
+          "id": 0,
+          "direction": "row",
           "xs": 12,
-          "md": 12
+          "md": 12,
+          "widgets": [
+            {
+              "widget": "BuildingSummary",
+              "options": {
+                "id": "widget1",
+                "buildingId": 148,
+                "dataType": "cost",
+                "isRemovable": true
+              }
+            },
+            {
+              "widget": "BuildingSummary",
+              "options": {
+                "id": "widget2",
+                "buildingId": 148,
+                "dataType": "cost",
+                "isRemovable": true
+              }
+            },
+            {
+              "widget": "BuildingSummary",
+              "options": {
+                "buildingId": 148,
+                "dataType": "energy"
+              }
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "direction": "column",
+          "xs": 12,
+          "md": 3,
+          "widgets": [
+            {
+              "widget": "BuildingSummary",
+              "options": {
+                "id": "widget3",
+                "buildingId": 148,
+                "dataType": "cost",
+                "isRemovable": true
+              }
+            }
+          ]
         },
         {
           "id": 2,
+          "direction": "column",
           "xs": 12,
-          "md": 3
+          "md": 6,
+          "widgets": [
+            {
+              "widget": "BuildingSummary",
+              "options": {
+                "id": "widget5",
+                "buildingId": 148,
+                "dataType": "cost",
+                "isRemovable": true
+              }
+            }
+          ]
         },
         {
           "id": 3,
+          "direction": "column",
           "xs": 12,
-          "md": 6
+          "md": 3,
+          "widgets": [
+            {
+              "widget": "BuildingSummary",
+              "options": {
+                "id": "widget7",
+                "buildingId": 148,
+                "dataType": "cost",
+                "isRemovable": true
+              }
+            }
+          ]
         },
         {
           "id": 4,
+          "direction": "row",
           "xs": 12,
-          "md": 3
-        },
-        {
-          "id": 5,
-          "xs": 12,
-          "md": 12
-        }
-      ],
-      "widgets": [
-        {
-          "widget": "AddToDashboard",
-          "options": {}
-        },
-        {
-          "widget": "BuildingSummary",
-          "options": {
-            "buildingId": 148,
-            "dataType": "energy"
-          }
-        },
-        {
-          "widget": "BuildingSummary",
-          "options": {
-            "buildingId": 147,
-            "dataType": "energy"
-          }
+          "md": 12,
+          "widgets": [
+            {
+              "widget": "BuildingSummary",
+              "options": {
+                "id": "widget9",
+                "buildingId": 148,
+                "dataType": "cost",
+                "isRemovable": true
+              }
+            },
+            {
+              "widget": "DataGrid",
+              "options": {
+                "id": "datagrid1"
+              }
+            }
+          ]
         }
       ],
       "availableWidgets": [
@@ -1580,11 +1648,18 @@
             "buildingId": 147,
             "dataType": "energy"
           }
+        },
+        {
+          "widget": "DataGrid",
+          "options": {}
         }
+      ],
+      "additionalFunctionality": [
+        "AddWidgets"
       ]
     },
     {
-      "id": "DashboardDraggable",
+      "id": "Users",
       "sections": [
         {
           "id": 1,
@@ -1592,218 +1667,47 @@
           "xs": 12,
           "md": 12,
           "widgets": [
-            { "id": 7, "text": "Item 7" },
-            { "id": 8, "text": "Item 8" },
-            { "id": 9, "text": "Item 9" }       
+            {
+              "widget": "DataGrid",
+              "options": {
+                "id": "datagrid-users",
+                "data": "users"
+              }
+            }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "Customers",
+      "sections": [
         {
-          "id": 2,
-          "direction": "column",
-          "xs": 12,
-          "md": 3, 
-          "widgets": [
-            { "id": 4, "text": "Item 4" },
-            { "id": 5, "text": "Item 5" },
-            { "id": 6, "text": "Item 6" }
-          ]
-        },
-        {
-          "id": 3,
-          "direction": "column",
-          "xs": 12,
-          "md": 6,
-          "widgets": [
-            { "id": 1, "text": "Item 1" },
-            { "id": 2, "text": "Item 2" },
-            { "id": 3, "text": "Item 3" }
-          ]
-        },
-        {
-          "id": 4,
-          "direction": "column",
-          "xs": 12,
-          "md": 3,
-          "widgets": [
-            { "id": 10, "text": "Item 10" },
-            { "id": 11, "text": "Item 11" },
-            { "id": 12, "text": "Item 12" }
-          ]
-        },
-        {
-          "id": 5,
+          "id": 1,
           "direction": "row",
           "xs": 12,
           "md": 12,
           "widgets": [
-            { "id": 13, "text": "Item 13" },
-            { "id": 14, "text": "Item 14" },
-            { "id": 15, "text": "Item 15" }
+            {
+              "widget": "DataGrid",
+              "options": {
+                "id": "datagrid-customers",
+                "data": "customers"
+              }
+            }
           ]
         }
-      ],
-      "widgets": [
-        {
-          "widget": "BuildingSummary",
-          "options": {
-            "buildingId": 148,
-            "dataType": "cost",
-            "section": 1,
-            "position": 1
-          }
-        },
-        {
-          "widget": "BuildingSummary",
-          "options": {
-            "buildingId": 147,
-            "dataType": "cost",
-            "section": 1,
-            "position": 1
-          }
-        }
       ]
     },
     {
-      "id": "DashboardLayout",
-      "component": "DashboardLayout"
-    },
-    {
-      "id": "Reports",
-      "sections": [
-        {
-          "id": 1,
-          "direction": "column",
-          "xs": 12
-        },
-        {
-          "id": 2,
-          "direction": "column",
-          "xs": 12,
-          "md": 6
-        },
-        {
-          "id": 3,
-          "direction": "column",
-          "xs": 12,
-          "md": 6
-        },
-        {
-          "id": 4,
-          "direction": "column",
-          "xs": 12
-        }
-      ],
-      "widgets": [
-        {
-          "widget": "Report",
-          "options": {}
-        }
-      ]
-    },
-    {
-      "id": "Buildings",
-      "sections": [
-        {
-          "id": 1,
-          "xs": 12
-        }
-      ],
-      "widgets": [
-        {
-          "widget": "Building",
-          "options": {}
-        }
-      ]
-    },
-    {
-      "id": "AddToDashboard",
-      "icon": "fas fa-plus",
-      "component": "AddToDashboard"
-    },
-    {
-      "id": "Report",
-      "component": "Report"
-    },
-    {
-      "id": "Building",
-      "component": "Building"
-    },
-    {
-      "id": "LatestReport",
+      "id": "DataGrid",
       "allowMultiple": false,
-      "name": "Latest Report",
-      "icon": "fas fa-building",
-      "component": "DashboardWidget",
-      "innerComponent": "Report",
-      "info": "View and Download your latest report easily with this widget."
-    },
-    {
-      "id": "EnergyUsage",
-      "allowMultiple": true,
-      "name": "Simple Graph",
-      "component": "DashboardWidget",
-      "innerComponent": "ChartWrapper",
-      "info": "View your energy usage",
-      "userOptions": [
-        {
-          "name": "chartType",
-          "values": [
-            {
-              "name": "Area & Bar Chart",
-              "value": "AreaBarChart"
-            },
-            {
-              "name": "Area Chart",
-              "value": "AreaOnlyChart"
-            }
-          ]
-        }
-      ],
+      "name": "Data Grid",
+      "component": "DataGrid",
+      "info": "Simple Data Grid Component",
       "options": {
-        "chartType": "AreaOnlyChart",
-        "xAxisDataKey": "time",
-        "dataKey": "energy"
+        "id": "",
+        "data": "customers"
       }
-    },
-    {
-      "id": "BuildingSummary",
-      "allowMultiple": true,
-      "name": "Building Summary",
-      "component": "DashboardWidget",
-      "innerComponent": "BuildingSummary",
-      "info": "View building specific data",
-      "userOptions": [
-        {
-          "name": "buildingId",
-          "values": [
-            {
-              "name": "Homebush West",
-              "value": 148
-            },
-            {
-              "name": "Regents Park",
-              "value": 147
-            }
-          ]
-        },
-        {
-          "name": "dataType",
-          "values": [
-            {
-              "name": "kWh",
-              "value": "energy"
-            },
-            {
-              "name": "Co2",
-              "value": "co2"
-            },
-            {
-              "name": "Cost",
-              "value": "cost"
-            }
-          ]
-        }
-      ]
     }
   ],
   "buildings": [
@@ -2699,5 +2603,412 @@
       "time": 1537884000,
       "date": "2018-09-26 00:00:00"
     }
+  ],
+  "users": [
+      {
+          "userID": 368,
+          "email": "user1@simble.io",
+          "is_active": true,
+          "is_admin": false,
+          "term": false,
+          "user_mobile_level": "basic",
+          "created_at": 1539839810,
+          "updated_at": 1539839810,
+          "first_name": "User",
+          "last_name": "One",
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0423543945"
+      },
+      {
+          "userID": 367,
+          "email": "user2@simble.io",
+          "is_active": true,
+          "is_admin": false,
+          "term": true,
+          "user_mobile_level": "basic",
+          "created_at": 1539731831,
+          "updated_at": 1539900341,
+          "first_name": "User",
+          "last_name": "Two",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0435867456"
+      },
+      {
+          "userID": 366,
+          "email": "user3@simble.io",
+          "is_active": true,
+          "is_admin": false,
+          "term": true,
+          "user_mobile_level": "basic",
+          "created_at": 1539640610,
+          "updated_at": 1540262078,
+          "first_name": "User",
+          "last_name": "Three",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "04567834453"
+      },
+      {
+          "userID": 365,
+          "email": "user4@simble.io",
+          "is_active": true,
+          "is_admin": false,
+          "term": true,
+          "user_mobile_level": "basic",
+          "created_at": 1539055581,
+          "updated_at": 1539563537,
+          "first_name": "User",
+          "last_name": "Four",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0475835246"
+      },
+      {
+          "userID": 364,
+          "email": "user5@simble.io",
+          "is_active": false,
+          "is_admin": false,
+          "term": false,
+          "user_mobile_level": "basic",
+          "created_at": 1538971603,
+          "updated_at": 1539333105,
+          "first_name": "User",
+          "last_name": "Five",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0465832954"
+      },
+      {
+          "userID": 363,
+          "email": "user6@simble.io",
+          "is_active": true,
+          "is_admin": false,
+          "term": false,
+          "user_mobile_level": "basic",
+          "created_at": 1538690934,
+          "updated_at": 1538690934,
+          "first_name": "User",
+          "last_name": "Six",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0476834726"
+      },
+      {
+          "userID": 362,
+          "email": "user7@simble.io",
+          "is_active": false,
+          "is_admin": false,
+          "term": false,
+          "user_mobile_level": "basic",
+          "created_at": 1538635688,
+          "updated_at": 1538635688,
+          "first_name": "User",
+          "last_name": "Seven",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0465847394"
+      },
+      {
+          "userID": 361,
+          "email": "user8@simble.io",
+          "is_active": false,
+          "is_admin": false,
+          "term": false,
+          "logo": "",
+          "user_mobile_level": "basic",
+          "created_at": 1538553687,
+          "updated_at": 1538553687,
+          "first_name": "User",
+          "last_name": "Eight",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0424863295"
+      },
+      {
+          "userID": 360,
+          "email": "user9@simble.io",
+          "is_active": true,
+          "is_admin": false,
+          "term": true,
+          "logo": "",
+          "user_mobile_level": "basic",
+          "created_at": 1538544667,
+          "updated_at": 1538697243,
+          "first_name": "User",
+          "last_name": "Nine",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0458847204"
+      },
+      {
+          "userID": 359,
+          "email": "user10@simble.io",
+          "is_active": true,
+          "is_admin": false,
+          "term": false,
+          "logo": "",
+          "user_mobile_level": "basic",
+          "created_at": 1538379896,
+          "updated_at": 1538379896,
+          "first_name": "User",
+          "last_name": "Ten",
+          "birthday": null,
+          "occupation": "",
+          "street_name": "",
+          "street_number": "",
+          "postcode": "",
+          "city": "",
+          "country": "",
+          "mobile_number": "0425029483"
+      }
+  ],
+  "customers": [
+      {
+          "customerID": 215,
+          "parent_id": 152,
+          "name": "Customer One",
+          "domain": "",
+          "reseller": {
+              "customerID": 152,
+              "parent_id": 0,
+              "name": "Customer Eleven",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 214,
+          "parent_id": 152,
+          "name": "Customer Two",
+          "domain": "",
+          "reseller": {
+              "customerID": 152,
+              "parent_id": 0,
+              "name": "Customer Eleven",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 213,
+          "parent_id": 2,
+          "name": "Customer Three",
+          "domain": "",
+          "reseller": {
+              "customerID": 2,
+              "parent_id": 1,
+              "name": "Customer Twelve",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 212,
+          "parent_id": 152,
+          "name": "Customer Four",
+          "domain": "",
+          "reseller": {
+              "customerID": 152,
+              "parent_id": 0,
+              "name": "Customer Eleven",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 211,
+          "parent_id": 152,
+          "name": "Customer Five",
+          "domain": "",
+          "reseller": {
+              "customerID": 152,
+              "parent_id": 0,
+              "name": "Customer Eleven",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 210,
+          "parent_id": 152,
+          "name": "Customer Six",
+          "domain": "",
+          "reseller": {
+              "customerID": 152,
+              "parent_id": 0,
+              "name": "Customer Eleven",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 209,
+          "parent_id": 152,
+          "name": "Customer Seven",
+          "domain": "",
+          "reseller": {
+              "customerID": 152,
+              "parent_id": 0,
+              "name": "Customer Eleven",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 208,
+          "parent_id": 152,
+          "name": "Customer Eight",
+          "domain": "",
+          "reseller": {
+              "customerID": 152,
+              "parent_id": 0,
+              "name": "Customer Eleven",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 207,
+          "parent_id": 193,
+          "name": "Customer Nine",
+          "domain": "",
+          "reseller": {
+              "customerID": 2,
+              "parent_id": 1,
+              "name": "Customer Twelve",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      },
+      {
+          "customerID": 206,
+          "parent_id": 2,
+          "name": "Customer Ten",
+          "domain": "",
+          "reseller": {
+              "customerID": 2,
+              "parent_id": 1,
+              "name": "Customer Twelve",
+              "domain": ""
+          },
+          "white_label": {
+              "id": 3,
+              "domain": "testdomain.com",
+              "support_email": "",
+              "support_phone": "",
+              "created_at": 1528430142,
+              "updated_at": 1533900641
+          }
+      }
   ]
 }
+

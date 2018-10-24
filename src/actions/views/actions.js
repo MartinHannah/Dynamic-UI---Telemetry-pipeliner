@@ -1,5 +1,5 @@
 import * as api from '../../utils/api';
-import * as types from './actionTypes';
+import * as types from '../actionTypes';
 
 export const loadViewsSuccess = (views) => {
     return {

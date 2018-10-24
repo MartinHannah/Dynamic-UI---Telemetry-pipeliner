@@ -11,8 +11,8 @@ type Props = {
 
 export const DayDateXAxis = (props: Props) => {
     const {payload, x, y } = props;
-    let date = moment.unix(payload.value).format('Do');
-    let day = moment.unix(payload.value).format('ddd');
+    const date = moment.unix(payload.value).format('Do');
+    const day = moment.unix(payload.value).format('ddd');
     const textFill = (day == 'Sat' || day == 'Sun') ? '#EF5736' : '#000';
   
     return (

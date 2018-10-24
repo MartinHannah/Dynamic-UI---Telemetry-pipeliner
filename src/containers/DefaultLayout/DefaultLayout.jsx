@@ -30,7 +30,7 @@ const DefaultLayout = (props: Props) => {
                 component={DefaultComponent}
               />
               ))}
-            <Redirect from="/" to="/dashboard" />
+            <Redirect from="/" to="/customers" />
           </Switch>
         </div>
       </main>

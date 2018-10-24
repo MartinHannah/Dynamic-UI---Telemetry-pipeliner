@@ -37,6 +37,7 @@ class AddWidgets extends React.Component<Props> {
   };
 
   updateOptions = (id, options) => { 
+    options.id = shortid.generate();
     const { modifyWidget } = this.props;
     modifyWidget('Dashboard', id, true, options);
   }
