@@ -1691,7 +1691,38 @@
               "widget": "DataGrid",
               "options": {
                 "id": "datagrid-customers",
-                "data": "customers"
+                "data": "customers",
+                "rowsSelectable": false
+              }
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "direction": "row",
+          "xs": 12,
+          "md": 12,
+          "widgets": [
+            {
+              "widget": "FormViewer", 
+              "options": { 
+                "id": "formviewer-example"
+              }
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "direction": "row",
+          "xs": 12,
+          "md": 12,
+          "widgets": [
+            {
+              "widget": "DataGrid",
+              "options": {
+                "id": "datagrid-customers",
+                "data": "customers",
+                "rowsSelectable": true
               }
             }
           ]
@@ -1707,6 +1738,16 @@
       "options": {
         "id": "",
         "data": "customers"
+      }
+    },
+    {
+      "id": "FormViewer",
+      "allowMultiple": true,
+      "name": "Form Viewer",
+      "component": "FormViewer",
+      "info": "Component to load in the form ",
+      "options": {
+        "id": ""
       }
     }
   ],

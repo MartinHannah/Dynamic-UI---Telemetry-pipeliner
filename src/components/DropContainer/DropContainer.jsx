@@ -1,15 +1,12 @@
 import * as React from "react";
 import "./DropContainer.scss";
-import * as randomstring from "randomstring";
 import { DropTarget } from "react-dnd";
 import classNames from 'classnames';
-
 
 //Components
 import Grid from "@material-ui/core/Grid";
 import ItemTypes from "../../utils/itemTypes";
 import DraggableCard from "../DraggableCard/DraggableCard";
-//import LayoutPosition from '../../components/DashboardLayout/DashboardLayout';
 
 type Props = {
   connectDropTarget: Function,
@@ -25,20 +22,6 @@ class DropContainer extends React.Component<Props> {
   constructor(props) {
     super(props);
   }
-
-  generateKeys = num => {
-    let keys = [];
-    for (let i = 0; i < num; i++) {
-      keys.push(
-        randomstring.generate({
-          length: 5,
-          charset: "alphabetic"
-        })
-      );
-    }
-    console.log(keys);
-    return keys;
-  };
 
   render() {
     const {

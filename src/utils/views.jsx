@@ -61,3 +61,23 @@ export const DataGrid = Loadable({
     loader: () =>  import('../components/DataGrid/DataGrid'),
     loading: LoadingComponent
 });
+
+export const FormViewer = Loadable({
+    loader: () =>  import('../components/FormViewer/FormViewer'),
+    loading: LoadingComponent
+});
+
+export const InputField = Loadable({
+    loader: () =>  import('../components/InputField/InputField'),
+    loading: LoadingComponent
+});
+
+export const DefaultButton = Loadable({
+    loader: () =>  import('../components/DefaultButton/DefaultButton'),
+    loading: LoadingComponent
+});
+
+export const SwitchGroup = Loadable({
+    loader: () =>  import('../components/SwitchGroup/SwitchGroup'),
+    loading: LoadingComponent
+});
