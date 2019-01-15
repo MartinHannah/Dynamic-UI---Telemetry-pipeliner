@@ -1,0 +1,19 @@
+@import '../../App';
+
+.data-grid-toolbar { 
+    background-color: white;
+    padding: 5px;
+
+    .toolbar-item { 
+        margin: 0px 5px 0px 5px;
+    }
+
+    .toolbar-chip { 
+        background-color: $shade-three;
+        color: white;
+    }
+
+    .toolbar-group-panel { 
+        margin: 0px 5px 0px 5px !important;
+    }
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import compose from 'recompose/compose';
-import { connect } from 'react-redux';
 import { DragSource, DropTarget } from 'react-dnd';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -8,19 +7,26 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { modifyDashboardWidget } from '../../actions/views/actions';
 import ItemTypes from '../../utils/itemTypes';
 
 
 type Props = { 
+  /** Used by reactdnd library to allow this to be a drop target */
   connectDropTarget: Function,
+  /** Allows this container to be draggable */
   connectDragSource: Function,
+  /** Is the card currently being dragged */
   isDragging: boolean,
+  /** The widget that this card contains */
   widget: Object,
-  modifyWidget: Function
 }
 
-class DraggableCard extends React.Component<Props> { 
+/** A Draggable container for widgets. 
+All widgets are wrapped in this and if they are draggable it will provide the functionality for this.
+Draggable Cards are both drop targets and drag sources to allow for reordering and moving to different sections. 
+*/
+class DefaultDraggableCard extends React.Component<Props> { 
+
   constructor(props) { 
     super(props);
     this.widgetRef = React.createRef();
@@ -29,16 +35,16 @@ class DraggableCard extends React.Component<Props> {
      };
   }
 
-    handleClick = (event) => {
-      this.setState({ anchorEl: event.currentTarget });
-    };
-  
-    handleClose = () => {
-      this.setState({ anchorEl: null });
-    };
+  handleClick = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
 
   render() { 
-    const { widget, isDragging, connectDragSource, connectDropTarget, modifyWidget, removeWidget, position, ...other} = this.props;
+    const { widget, isDragging, connectDragSource, connectDropTarget, removeWidget, position} = this.props;
     const { anchorEl } = this.state;
     const opacity = isDragging ? 0 : 1;
     return connectDragSource(connectDropTarget(
@@ -70,7 +76,7 @@ class DraggableCard extends React.Component<Props> {
               </Grid>
             ) 
             : null }
-          <widget.widget.component widget={widget.widget} options={widget.options} {...other} />
+          <widget.widget.component widget={widget.widget} {...widget.options} />
         </Paper>
       </div>
     ));
@@ -78,6 +84,9 @@ class DraggableCard extends React.Component<Props> {
 }
 
 const widgetSource = {
+  canDrag(props) {
+    return props.widget.isDraggable;
+  },
   beginDrag(props) {
     console.log('begin dragging widget', props);
     return {
@@ -140,31 +149,12 @@ const widgetTarget = {
 		if ( props.sectionId === sourceListId ) {
       //console.log('move');
 			props.moveWidget(dragIndex, hoverIndex);
-			// Note: we're mutating the monitor item here!
-			// Generally it's better to avoid mutations,
-			// but it's good here for the sake of performance
-			// to avoid expensive index searches.
-      //console.log(monitor.getItem());
 			monitor.getItem().position = hoverIndex;
 		}	
   }
 }
 
-const mapStateToProps = () => {
-  return {
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return { 
-      modifyWidget: (widgetId, child, add) => { 
-        dispatch(modifyDashboardWidget(widgetId, child, add));
-      }
-    }
-  }
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
   DropTarget(ItemTypes.DASHBOARDWIDGET, widgetTarget, (connect)=> ({
     connectDropTarget: connect.dropTarget()
   })),
@@ -173,4 +163,4 @@ export default compose(
   isDragging: monitor.isDragging()
   })),
  //DragTarget(ItemTypes.DASHBOARDWIDGET, widgetTarget, collect)
-)(DraggableCard);
+)(DefaultDraggableCard);

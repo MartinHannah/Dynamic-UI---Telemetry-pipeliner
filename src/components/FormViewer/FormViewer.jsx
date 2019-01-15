@@ -1,111 +1,141 @@
 /* eslint react/destructuring-assignment: 0 */
-import * as React from 'react';
-import './FormViewer.scss';
-import * as shortid from 'shortid';
+import * as React from "react";
+import "./FormViewer.scss";
+import * as shortid from "shortid";
 
-//Components
-//import * as submissions from '../../utils/formSubmission';
-import * as components from '../../utils/views';
-import DefaultButton from '../DefaultButton/DefaultButton';
-//import SwitchGroup from '../SwitchGroup/SwitchGroup';
+//formComponents
+import Grid from "@material-ui/core/Grid";
+import * as submissions from "../../utils/formSubmission";
+import * as loadableformComponents from "../../utils/views";
 
-const definition = [
-  { 
-    component: "InputField", 
-    options: {
-      name: 'firstName',
-      inputType: 'text',
-      readOnly: false, 
-      placeholder: 'placeholder',
-      helperText: 'helping out',
-      isMultiline: false,
-      isRequired: false, 
-      label: 'Testing input text'
+const sampleDefinition = {
+  submission: "export",
+  formComponents: [
+    {
+      component: "InputField",
+      options: {
+        name: "firstName",
+        inputType: "text",
+        readOnly: false,
+        placeholder: "Enter name",
+        helperText: "This field is for your first name",
+        isMultiline: false,
+        isRequired: false,
+        label: "First Name"
+      }
+    },
+    {
+      component: "SwitchGroup",
+      options: {
+        name: "switchgroup",
+        label: "Select Notifications",
+        helperText:
+          "Select the types of notifications you would like to receive",
+        data: [
+          { name: "Email", value: "email", isChecked: true },
+          { name: "SMS", value: "sms", isChecked: false }
+        ]
+      }
+    },
+    {
+      component: "DefaultButton",
+      options: {
+        fullWidth: false,
+        variant: "text",
+        label: "Submit",
+        type: "submit"
+      }
     }
-  },
-  { 
-    component: "InputField", 
-    options: {
-      name: 'age',
-      inputType: 'number',
-      readOnly: false, 
-      placeholder: 'placeholder number',
-      helperText: 'this is a number',
-      isMultiline: false,
-      isRequired: false, 
-      label: 'Testing input number'
-    } 
-  },
-  {
-    component: "SwitchGroup",
-    options: { 
-      name: 'switchgroup',
-      label: 'switches',
-      helperText: 'Helping out',
-      data: [
-        {name: 'Gilad Gray 1', value: 'gilad', isChecked: true},
-        {name: 'Jason Killian 1', value: 'jason', isChecked: false},
-        {name: 'Antoine Llorca 1', value: 'antoine'}
-    ], 
-    }
-  },
-  { 
-    component: "DefaultButton", 
-    options: {
-      fullWidth: false,
-      variant: 'text',
-      label: 'Testing input number',
-      type: 'submit'
-    } 
+  ]
+};
+type Props = {
+  /** The array of formComponents and their configuration that the form will load */
+  formComponents: Array,
+  /** What the form will do on submission. Currently supported values:  */
+  submission: string
+};
+
+/**
+  The FormViewer component reads information from a form definition and genrerates the required formComponents. 
+ */
+class FormViewer extends React.Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      formDef: sampleDefinition.formComponents,
+      loaded: false,
+      submission: "none"
+    };
   }
-]
 
-type Props =  {
-}
+  componentDidMount = () => {
+    this.renderDefinition();
+  };
 
-class FormViewer extends React.Component<Props> { 
-    constructor(props) { 
-        super(props);
-        this.state = { 
-          formDef: '',
-        }
-    }
+  handleChange = event => {
+    console.log("typing");
+    console.log(this.state[event.target.name]);
 
-    componentDidMount = () => { 
-      this.renderDefinition();
-    }
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-    handleChange = (event) => {
-      this.setState({[event.target.name]: event.target.value});
-    }
-
-    renderDefinition = () => { 
-      const form = definition.map((element) => {
-        const Component = components[element.component];
-        return <Component key={shortid.generate()} {...element.options} value={this.state[element.options.name]} change={this.handleChange} />
-      });
-      this.setState({formDef: form});
-    }
-
-    submit = (event) => {
-      console.log(this.state);
-      event.preventDefault();
-    }
-    
-    render() { 
-      const { formDef } = this.state; 
-        return (
-          <form onSubmit={this.submit}>
-            {formDef}
-            <DefaultButton 
-              fullWidth={false} 
-              click={this.buttonTest}
-              variant='outline'
-              label='Button Test'
+  /**
+Take the definition and convert it into loadable components. 
+@public 
+ */
+  renderDefinition = () => {
+    const { formComponents } = this.props;
+    const form = formComponents.map(element => {
+      const Component = loadableformComponents[element.component];
+      if (element.options.value !== undefined)
+        this.setState({ [element.options.name]: element.options.value }, () => {
+          return (
+            <Component
+              key={shortid.generate()}
+              {...element.options}
+              value={this.state[element.options.name]}
+              change={this.handleChange}
             />
-          </form>
-        );
-    }
+          );
+        });
+      return (
+        <Component
+          key={shortid.generate()}
+          {...element.options}
+          value={this.state[element.options.name]}
+          change={this.handleChange}
+        />
+      );
+    });
+    this.setState({ formDef: form }, () => {
+      console.log("loaded");
+      this.setState({ loaded: true });
+    });
+  };
+
+  /** 
+Generic submit functionality. Should choose a submission action based on form definition. 
+@public
+ */
+  submit = event => {
+    const { submission } = this.state;
+    let f = submissions[submission];
+    f();
+    console.log(this.state);
+
+    event.preventDefault();
+  };
+
+  render() {
+    const { loaded, formDef } = this.state;
+    return (
+      <form onSubmit={this.submit}>
+        <Grid container direction="column">
+          {loaded ? formDef : null}
+        </Grid>
+      </form>
+    );
+  }
 }
 
 export default FormViewer;

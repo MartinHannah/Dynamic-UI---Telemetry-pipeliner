@@ -1,7 +1,7 @@
-#SimbleSense v2 Project
+# SimbleSense v2 Project
 
 
-##Running the Project
+## Running the Project
 
 First run ```npm install``` if it has not been run before. 
 
@@ -10,7 +10,7 @@ Run ```npm start``` to run front end React part of the app.
 Run ```docker-compose up``` to run the mock json-server. 
 
 
-##Project Structure
+## Project Structure
 
 ### Components
 

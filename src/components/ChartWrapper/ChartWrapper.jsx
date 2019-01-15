@@ -7,7 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Grid from '@material-ui/core/Grid';
 import SelectFilter from '../SelectFilter/SelectFilter';
 import * as components from '../../utils/views';
-import { getBuildings, getEnergyData  } from '../../utils/api';
+// import { getBuildings, getEnergyData  } from '../../utils/api';
 
 type Props = { 
     widget: Object,
@@ -24,20 +24,20 @@ class ChartWrapper extends React.Component<Props> {
     }
     
     componentWillMount(){
-        const { building } = this.state;
+        //const { building } = this.state;
         const { options } = this.props;
         this.setState({ chartType: options.chartType });
-        getBuildings().then((result) => { 
-            let buildings = result.data;
-            buildings = buildings.map((building) => ({ 
-                   value: building.id,
-                   name: building.name
+        // getBuildings().then((result) => { 
+        //     let buildings = result.data;
+        //     buildings = buildings.map((building) => ({ 
+        //            value: building.id,
+        //            name: building.name
                
-            }));
-            buildings.push({name: 'All Buildings', value: 'all'});
-            this.setState({buildingData: buildings});
-            this.filterData(building);
-        })
+        //     }));
+        //     buildings.push({name: 'All Buildings', value: 'all'});
+        //     this.setState({buildingData: buildings});
+        //     this.filterData(building);
+        // })
         
     }
 
@@ -47,11 +47,11 @@ class ChartWrapper extends React.Component<Props> {
     }
 
     //Currently only filtering by building as we only have dummy month data.
-    filterData = (building) => { 
-        getEnergyData(building).then((result) => { 
-            let data = result.data;
-            this.setState({data});
-        })
+    filterData = () => { 
+        // getEnergyData(building).then((result) => { 
+        //     let data = result.data;
+        //     this.setState({data});
+        // })
     }
 
     render() { 

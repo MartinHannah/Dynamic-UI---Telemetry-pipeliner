@@ -1,11 +1,8 @@
 import * as React from 'react';
 import './DefaultComponent.scss';
 import { connect } from 'react-redux';
-import compose from 'recompose/compose';
 import * as shortid from 'shortid';
-import { DragDropContext } from 'react-dnd';
-import MultiBackend from 'react-dnd-multi-backend';
-import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch';
+
 //Components
 import Grid from '@material-ui/core/Grid';
 //import LayoutPosition from '../../components/DashboardLayout/DashboardLayout';
@@ -16,11 +13,16 @@ import * as viewActions from '../../actions/views/actions';
 //import LayoutPosition from '../../components/DashboardLayout/DashboardLayout';
 
 type Props = { 
+  /** The current page/view to load, this is used to determine additional page functionality and load additional components. 
+  E.g. if a user can add for widgets to a page this information will be here. */
   currentView: Object,
+  /** The sections of the page to load */
   currentSections: Array,
+  /** redux function allowing a section to be updated with differing widgets. */
   updateSectionState: Function
 }
 
+/** The top level component for all widgets. This component will load in a page consisting of sections that contain widgets. */
 class DefaultComponent extends React.Component<Props> { 
   constructor(props) { 
     super(props);
@@ -80,7 +82,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  DragDropContext(MultiBackend(HTML5toTouch))
-  )(DefaultComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultComponent);

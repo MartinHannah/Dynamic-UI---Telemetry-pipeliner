@@ -10,11 +10,15 @@ import IconButton from '@material-ui/core/IconButton';
 import * as viewActions from '../../actions/views/actions';
 
 type Props = { 
-  currentView: Object,
+  /** The information about the current page we are on. Should contain info for loading correct widgets etc. */
+  currentView: Object, 
+  /** redux boolean for opening and closing menu, shared with sidebar component */
   menuOpen: boolean,
+  /** opens/closes the sidemenu, shared with sidebar component. */
   toggleMenu: Function
 }
 
+/** The DefaultTopBar is a container component that loads the relevant information for the top bar section of the application */
 const DefaultTopBar = (props: Props) => { 
   const { menuOpen, toggleMenu, currentView } = props;
   return (
@@ -32,7 +36,7 @@ const DefaultTopBar = (props: Props) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="title" color="inherit" noWrap>
-          {currentView.id}
+          {currentView.label}
         </Typography>
       </Toolbar>
     </AppBar>

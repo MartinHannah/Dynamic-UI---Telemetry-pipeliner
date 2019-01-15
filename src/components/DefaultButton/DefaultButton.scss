@@ -1,0 +1,17 @@
+@import '../../App';
+
+.default-button { 
+    background-color: $shade-three;
+
+    .default-button-text { 
+        color: white;
+    }
+}
+
+.default-button:focus { 
+    outline: 0;
+}
+
+.default-button:hover { 
+    background-color: $shade-four;
+}

@@ -1,11 +1,13 @@
 import update from 'react-addons-update';
 import * as types from '../actions/actionTypes';
+import { getObjectByProp } from '../utils/util';
 
 
 const initialState = {
   views: [],
   currentView: {
-    id: "Dashboard",
+    id: 0,
+    label: "Dashboard"
   },
   currentSections: [
 
@@ -14,6 +16,7 @@ const initialState = {
 };
 
 const viewReducer = (state = initialState, action) => {
+
   switch (action.type) {
     case types.LOAD_VIEWS_SUCCESS:
       return Object.assign({}, state, {
@@ -21,8 +24,8 @@ const viewReducer = (state = initialState, action) => {
       });
     case types.UPDATE_CURRENT_VIEW:
       return Object.assign({}, state, {
-        currentView: action.view,
-        currentSections: action.view.sections,
+        currentView: getObjectByProp(state.views, 'id', action.routeId),
+        currentSections: getObjectByProp(state.views, 'id', action.routeId).container.sections,
       });
     case types.MENU_OPEN_CLOSE: 
       return Object.assign({}, state, {

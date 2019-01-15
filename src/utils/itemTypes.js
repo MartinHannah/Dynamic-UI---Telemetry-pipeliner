@@ -1,7 +1,8 @@
 
 
 const ItemTypes = {
-    DASHBOARDWIDGET: 'DashboardWidget'
+    DASHBOARDWIDGET: 'DashboardWidget',
+    COLUMN: 'column'
   };
 
 export default ItemTypes;

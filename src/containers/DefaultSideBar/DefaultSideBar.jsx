@@ -12,14 +12,18 @@ import SidebarItem from '../../components/SidebarItem/SidebarItem';
 import * as viewActions from '../../actions/views/actions';
 
 type Props = {
+  /** The menu items to load */
   views: Array,
+  /** A redux state boolean for opening and closing sidemenu */
   menuOpen: boolean,
+  /** The action to open and close menu (shared by topbar and sidebar) */
   toggleMenu: Function, 
-  loadNewView: Function
+  /**  loads a new view into the current state, used by menu items to change the page navigation */
+  updateRoute: Function
 }
-
+/** The DefaulySideBar is a container component that loads in the menu items for the sidebar menu section of the appliation */
 const DefaultSideBar = (props: Props) => { 
-  const { views, menuOpen, toggleMenu, loadNewView } = props;
+  const { views, menuOpen, toggleMenu, updateRoute } = props;
   return (
     <div>
       <Drawer
@@ -35,7 +39,7 @@ const DefaultSideBar = (props: Props) => {
           </IconButton>
         </div>
         <List>
-          {views.map((view) => <SidebarItem key={view.id} path={view.path} name={view.id} icon={view.icon} click={loadNewView} />)}
+          {views.map((view) => <SidebarItem key={view.id} path={view.path} name={view.label} icon={view.icon} id={view.id} click={updateRoute} />)}
         </List>
       </Drawer>
     </div>
@@ -54,8 +58,8 @@ const mapDispatchToProps = (dispatch) => {
     toggleMenu: (isOpen) => { 
         dispatch(viewActions.toggleMenu(isOpen));
     },
-    loadNewView: (name) => { 
-        dispatch(viewActions.loadNewView(name));
+    updateRoute: (id) => { 
+        dispatch(viewActions.updateRoute(id));
     }
   }
 }

@@ -8,10 +8,15 @@ import DefaultSideBar from '../DefaultSideBar/DefaultSideBar';
 import DefaultComponent from '../DefaultComponent/DefaultComponent';
 
 type Props = { 
-  views: Array,
+  /** Information on the routes that we pull in for the application */
+  views: Array, 
+  /** redux boolean for opening/closing the sidemenu */
   menuOpen: boolean
 }
-
+/**
+  DefaultLayout is the top level component of the dynamic interface. It loads all other components. 
+  At a top level it loads the [side bar](#defaultsidebar), [top bar](#defaulttopbar) and the main content inside the page [DefaultComponent](#defaultcomponent)
+ */
 const DefaultLayout = (props: Props) => { 
   const { views, menuOpen } = props;
   return (
@@ -25,7 +30,7 @@ const DefaultLayout = (props: Props) => {
               <Route
                 key={view.id}
                 path={view.path}
-                exact={view.exact}
+                exact={Boolean(view.exact)}
                 name={view.id}
                 component={DefaultComponent}
               />
@@ -37,6 +42,8 @@ const DefaultLayout = (props: Props) => {
     </div>
   );
 }
+
+
 const mapStateToProps = (state) => {
     return {
       views: state.viewReducer.views,

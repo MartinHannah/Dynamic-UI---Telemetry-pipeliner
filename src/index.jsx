@@ -5,11 +5,11 @@ import { Provider } from 'react-redux';
 import App from './App';
 import configureStore from './store/configureStore';
 import 'bootstrap/dist/css/bootstrap.css';
-import { loadViews, loadNewView } from './actions/views/actions';
+
+import { loadViews } from './actions/views/actions';
 
 const store = configureStore();
-store.dispatch(loadViews());
-store.dispatch(loadNewView('Customers'));
+store.dispatch(loadViews()); //Load the routes
 
 ReactDOM.render(
   <Provider store={store}><App /></Provider>

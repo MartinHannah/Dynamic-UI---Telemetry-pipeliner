@@ -1,5 +1,4 @@
-import * as React from 'react';
-import PropTypes from 'prop-types'; 
+import * as React from 'react'; 
 
 //Components
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, CartesianGrid, Area } from 'recharts';
@@ -28,14 +27,6 @@ const AreaOnlyChart = (props: Props) => {
         </AreaChart>
       </ResponsiveContainer>
     );
-}
-
-AreaOnlyChart.propTypes = {
-    options: PropTypes.shape({
-        xAxisDataKey: PropTypes.string.isRequired,
-        dataKey: PropTypes.string.isRequired,
-      }).isRequired,
-      data: PropTypes.isRequired
 }
 
 export default AreaOnlyChart;

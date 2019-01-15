@@ -11,13 +11,14 @@ type Props = {
  path: string,
  name: string,
  icon: string,
+ id: number,
  click: Function
 }
 
 const SidebarItem = (props: Props) => {
-  const {path, name, icon, click} = props
+  const {path, name, icon, click, id} = props;
     return (
-      <NavLink to={path} className='link' onClick={() => click(name)}>
+      <NavLink to={path} className='link' onClick={() => click(id)}>
         <ListItem button>
           <Icon className={classNames(icon, 'icon')} />
           <ListItemText primary={name} className='text' />

@@ -1,4 +1,9 @@
 import * as React from 'react';
+import { DragDropContext } from 'react-dnd';
+import MultiBackend from 'react-dnd-multi-backend';
+import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch';
+
+
 import './App.scss';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -25,5 +30,5 @@ class App extends React.Component {
 }
 
 
-export default App;
+export default DragDropContext(MultiBackend(HTML5toTouch))(App);
 

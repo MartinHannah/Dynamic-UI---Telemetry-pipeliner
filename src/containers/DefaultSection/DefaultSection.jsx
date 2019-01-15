@@ -1,19 +1,28 @@
 import * as React from 'react';
 import './DefaultSection.scss';
+import shortid from 'shortid';
 import Grid from '@material-ui/core/Grid';
-import DropContainer from '../../components/DropContainer/DropContainer';
+import DefaultDropContainer from '../DefaultDropContainer/DefaultDropContainer';
+
 
 type Props = { 
+    /** The breakpoint for mobile screens, values of 1-12 accepted.  */
     xs: number,
+    /** The breakpoint for medium screens, values of 1-12 accepted */
     md: number,
+    /** The direction that the section will load widgets in. Values: 'row', 'column' */
     direction: string,
+    /** The list of widgets that the section contains */
     list: Array,
+    /** The id of the section */
     id: number,
+    /** How to justify the content inside the section. Values: 'flex-start', 'center', 'flex-end', 'space-between', 'space-around', 'space-evenly' */
     justify: string,
+    /** Update a section's widgets add/remove. This will be called if a user uses drag & drop to move widget to another section */
     updateSection: Function
 }
 
-
+/** A section is a container that can appear on a page multiple times and that contains a variety of widgets inside of it. */
 class DefaultSection extends React.Component<Props> { 
   constructor(props) { 
     super(props);
@@ -48,12 +57,21 @@ class DefaultSection extends React.Component<Props> {
     updateSection(widgets, id);
   };
 
+  generateWidgetIds = () => {
+    const { list } = this.props;
+    const widgets = list.map((widget) => {
+      const wid = Object.assign(widget, {id: shortid.generate()});
+      return wid;
+    })
+    return widgets;
+  }
+
   render () {
     const {id, direction, xs, md, justify, list } = this.props;
     //const sectionWidgets = this.getSectionWidgets();
     return (
       <Grid className="widget-section" container item direction={direction} xs={xs} md={md} justify={justify}>
-        <DropContainer sectionId={id} list={list} removeWidget={this.removeWidget} pushWidget={this.pushWidget} moveWidget={this.moveWidget} />
+        <DefaultDropContainer sectionId={id} list={list} removeWidget={this.removeWidget} pushWidget={this.pushWidget} moveWidget={this.moveWidget} />
       </Grid>
     );
   }

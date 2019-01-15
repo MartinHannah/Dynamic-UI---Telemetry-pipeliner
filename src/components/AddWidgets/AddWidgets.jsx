@@ -10,7 +10,7 @@ import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import WidgetInfoItem from '../WidgetInfoItem/WidgetInfoItem';
 
-import { modifyDashboardWidget } from '../../actions/views/actions';
+//import { modifyDashboardWidget } from '../../actions/views/actions';
 
 type Props = { 
   widget: Object,
@@ -80,10 +80,11 @@ const mapStateToProps = (state) => {
     currentView: state.viewReducer.currentView
   }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return { 
     modifyWidget: (widgetId, child, add, childOptions) => { 
-      dispatch(modifyDashboardWidget(widgetId, child, add, childOptions));
+      console.log(widgetId, child, add, childOptions);
+      // dispatch(modifyDashboardWidget(widgetId, child, add, childOptions));
     }
   }
 }

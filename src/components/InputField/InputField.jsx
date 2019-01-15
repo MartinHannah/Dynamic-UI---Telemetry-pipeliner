@@ -6,13 +6,13 @@ import TextField from '@material-ui/core/TextField';
 
 type Props = { 
   change: Function,
-  readOnly: boolean,
-  placeholder: string,
-  helperText: string,
-  isMultiline: boolean,
+  readOnly?: boolean,
+  placeholder?: string,
+  helperText?: string,
+  isMultiline?: boolean,
   inputType: string,
-  isRequired: boolean,
-  rowsMax: number,
+  isRequired?: boolean,
+  rowsMax?: number,
   label: string,
   inputComponent: Function,
   name: string,
@@ -20,8 +20,21 @@ type Props = {
 }
 
 class InputField extends React.Component<Props> { 
+  static defaultProps = { 
+    readOnly: false,
+    placeholder: '',
+    helperText: '',
+    isRequired: false,
+    rowsMax: 1, 
+    isMultiline: false,
+  }
+
     constructor(props) { 
         super(props);
+    }
+
+    componentDidMount = () =>  {
+
     }
 
     handleChange = (event) => { 

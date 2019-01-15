@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Business from '@material-ui/icons/Business';
 import Home from '@material-ui/icons/Home';
 import Edit from '@material-ui/icons/Edit';
-import { getEnergyData } from '../../utils/api';
+// import { getEnergyData } from '../../utils/api';
 import { calculateAverage } from '../../utils/util';
 
 //These values need to move to being configurable. 
@@ -22,7 +22,7 @@ const types = [
 type Props = { 
   name: string,
   type: string,
-  id: number
+  // id: number
 }
 
 class BuildingItem extends React.Component<Props> {
@@ -35,11 +35,11 @@ class BuildingItem extends React.Component<Props> {
   }
 
   componentWillMount = () => {
-    const {id} = this.props;
-    getEnergyData(id).then((result) => { 
-      const buildingInfo = this.returnAverageDataTypes(result.data);
-      this.setState({buildingInfo});
-    })
+    // const {id} = this.props;
+    // getEnergyData(id).then((result) => { 
+    //   const buildingInfo = this.returnAverageDataTypes(result.data);
+    //   this.setState({buildingInfo});
+    // })
   }
 
   returnAverageDataTypes = (data) => { 

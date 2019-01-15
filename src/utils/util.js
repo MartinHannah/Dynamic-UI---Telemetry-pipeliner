@@ -1,9 +1,17 @@
+import Immutable from 'immutable'; 
+
 const dataTypes = { 
     "cost": "$", 
     "energy": "kWh",
     "co2": "CO2e kg", 
     "realPower": "kW", 
 }
+
+const isImmutableLoaded = () => typeof Immutable !== 'undefined';
+
+export const isColumnsImmutable = (columns) => {
+  return isImmutableLoaded() && columns instanceof Immutable.List;
+};
 
 export const shortenNumber = (number, decPlaces) => { 
     decPlaces = Math.pow(10,decPlaces);
@@ -48,4 +56,66 @@ const formatData = (val, key) => {
     }
     return val;
 }
-  
+
+
+export const objectToForm = (obj) => { 
+    console.log(obj);
+}
+
+const exportToCSV = (data, colDelimiter = ',', lineDelimiter = '\n') => { 
+    console.log('export csv', data);
+    if(data == null || !data.length) { 
+        return null;
+    }
+
+    const keys = Object.keys(data[0]);
+    console.log(keys);
+    let result;
+    //Add headers
+    result = keys.flatMap((key) => { return key; }) + lineDelimiter;
+
+    data.forEach(function(item) {
+        let ctr = 0;
+        keys.forEach(function(key) {
+            if (ctr > 0) result += colDelimiter;
+
+            result += item[key];
+            ctr++;
+        });
+        result += lineDelimiter;
+    });
+    console.log(result);
+    return result;
+}
+
+export const downloadCSV = (data, filename = 'export.csv') => { 
+    
+    let csv = exportToCSV(data);
+    if(csv == null) return;
+
+    if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+        }
+        data = encodeURI(csv);
+
+        const link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
+}
+
+export const hasValue = (obj, value) => {
+    const values = Object.values(obj); //Array of object values
+    return values.some((val) => { 
+        if(val === null) return false;
+        const regex = new RegExp(value, "i");
+        const stringVal = val.toString();
+        return regex.test(stringVal); 
+    })
+}
+
+export const getObjectByProp = (array, property, value) => {
+    return array.find(obj => {
+        return obj[property] === value;
+    })
+}

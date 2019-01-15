@@ -6,11 +6,17 @@ import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, CartesianGri
 import { FormatNumbersYAxis, DayDateXAxis } from '../CustomChartTicks/CustomChartTicks';
 import { EnergyCostTooltip } from '../CustomChartTooltips/CustomChartTooltips';
 
+
 type Props = {
+  /** Available configurations for the area bar chart */
   options: Object,
+  /** The data that the chart will use to read information */
   data: Object
 }
 
+/**
+  * Component to render a chart that displays both area and bars.
+ */
 const AreaBarChart = (props: Props) => { 
   const { data, options } = props;
   return (
