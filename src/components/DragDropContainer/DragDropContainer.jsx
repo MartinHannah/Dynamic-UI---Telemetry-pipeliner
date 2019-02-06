@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import DraggableHeaderCell from './DraggableHeaderCell';
-import RowDragLayer from './RowDragLayer';
+import DraggableHeaderCell from '../DraggableHeaderCell/DraggableHeaderCell';
+import RowDragLayer from '../RowDragLayer/RowDragLayer';
 import { isColumnsImmutable } from '../../utils/util';
 
 type Props = { 

@@ -1,13 +1,27 @@
 @import '../../App';
 
-.icon {
-    color: $shade-four;
+.link {
+    text-decoration: none;
+    font-family: $base-font-family-primary;
+
+    .icon {
+        display: inline-block;
+        color: $sidebar-icon-color;
+        font-size: $icon-large;
+    }
+    
+    .text { 
+        padding-left: 25px;
+        color: $sidebar-text-color;
+    }
+
+    .menu-item { 
+        padding-left: calc((#{$sidebarClosedWidth} /2) - (#{$icon-large}/2));
+    }
 }
 
-.link {
+.link:hover { 
     text-decoration: none;
 }
 
-.text { 
-    padding-left: 25px;
-}
+//20.5px;

@@ -4,11 +4,10 @@ import * as moment from 'moment';
 import './DataGridToolbar.scss';
 import Grid from '@material-ui/core/Grid';
 import ChipInput from 'material-ui-chip-input';
-import EditIcon from '@material-ui/icons/Edit';
-
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 //Components
-import DefaultButton from '../DefaultButton/DefaultButton';
-import DefaultIconButton from '../IconButton/IconButton';
+
 import GroupColumnPanel from './GroupColumnPanel';
 import { downloadCSV } from '../../utils/util';
 
@@ -39,9 +38,6 @@ type Props = {
 class DataGridToolbar extends React.Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { 
-      enableGrouping: false
-    }
   }
 
   exportData = () => {
@@ -52,7 +48,6 @@ class DataGridToolbar extends React.Component<Props> {
 
   render() {
     const { allowFilter, exportable, groupBy, groupAdded, groupDeleted, filters, addFilter, removeFilter, toggleVisibility } = this.props;
-    const { enableGrouping } = this.state;
     return (
       <Grid
         container
@@ -84,7 +79,7 @@ class DataGridToolbar extends React.Component<Props> {
             item: classNames('toolbar-item'),
           }}
         >
-          { exportable ? <DefaultButton label='Export' click={() => this.exportData()} /> : null }
+          { exportable ? <IconButton label='Export' onClick={() => this.exportData()}><Icon className={classNames('fas fa-download', 'toolbar-icon')} /></IconButton> : null }
         </Grid>
         <Grid
           item
@@ -92,7 +87,7 @@ class DataGridToolbar extends React.Component<Props> {
             item: classNames('toolbar-item'),
           }}
         >
-          <DefaultIconButton click={() => toggleVisibility()}><EditIcon /></DefaultIconButton>
+          <IconButton onClick={() => toggleVisibility()}><Icon className={classNames('fas fa-eye-slash', 'toolbar-icon')} /></IconButton>
         </Grid>
         <Grid
           item
@@ -100,14 +95,12 @@ class DataGridToolbar extends React.Component<Props> {
             item: classNames('toolbar-item'),
           }}
         >
-          <DefaultButton label='Group By Column' click={() => this.setState({enableGrouping: !enableGrouping})} />
-          { enableGrouping ? (
-            <GroupColumnPanel
-              groupBy={groupBy}
-              onColumnGroupAdded={groupAdded}
-              onColumnGroupDeleted={groupDeleted}
-              className='toolbar-group-panel'
-            />) : null } 
+          <GroupColumnPanel
+            groupBy={groupBy}
+            onColumnGroupAdded={(key) => groupAdded(key)}
+            onColumnGroupDeleted={(key, name) => groupDeleted(key, name)}
+            className='toolbar-group-panel'
+          />
         </Grid>
       </Grid>
 

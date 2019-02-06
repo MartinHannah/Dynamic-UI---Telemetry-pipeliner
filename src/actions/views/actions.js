@@ -9,7 +9,7 @@ export const loadViewsSuccess = (views) => {
 
 export const loadViews = () => {
   return function (dispatch) {
-    return api.getRoutes().then((views) => {
+    return api.getMenus().then((views) => {
       dispatch(loadViewsSuccess(views.data));
       dispatch(updateRoute(1));
     }).catch((err) => {
@@ -18,45 +18,34 @@ export const loadViews = () => {
   };
 };
 
-// //return a loaded widget for the view.
-// export const loadNewView = (widget) => { 
-//   console.log('loading view', widget);
-
-//   return function (dispatch) { 
-//     return api.loadWidget(widget).then((widget) => {
-//       dispatch(updateCurrentView(widget));
-//     }).catch((err) => {
-//       throw (err);
-//     })
-//   }
-// }
-
-//add or remove widgets from the dashboard
-// export const modifyDashboardWidget = (widgetId, child, add, childOptions) => {
-//   return function (dispatch) {  
-//     return api.updateDashboardWidget(widgetId, child, add, childOptions).then((widget) => {
-//       console.log(widget);
-//       dispatch(loadNewView(widget.data.id));
-//     });
-//   }
-// }
-
-// //set options on a widget and then modify the dashboard widget.
-// export const modifyWidgetOptions = (widgetId, options, parent, add) => { 
-//   return function(dispatch) { 
-//     return api.setWidgetOptions(widgetId, options).then(() => {  
-//       dispatch(modifyDashboardWidget(parent, widgetId, add));
-//     })
-//   }
-
-// }
-
 
 export const updateRoute = (routeId) => {
   console.log('loading route', routeId)
   return {
     type: types.UPDATE_CURRENT_VIEW, routeId,
   };
+}
+
+export const addRoute = (routeInfo) => { 
+  return function (dispatch) {
+      return api.addRoute(routeInfo).then((route) => {
+        dispatch(addRouteSuccess(route));
+      }).catch((err) => {
+        throw (err);
+      });
+    };
+}
+
+export const editRouteSuccess = (routeId, routeInfo) => { 
+  return { 
+    type: types.EDIT_ROUTE_SUCCESS, routeInfo
+  }
+}
+
+export const addRouteSuccess = (routeInfo) => {
+  return { 
+    type: types.ADD_ROUTE_SUCCESS, routeInfo
+  }
 }
 
 export const toggleMenu = (isOpen) => { 

@@ -6,16 +6,15 @@ import Typography from "@material-ui/core/Typography";
 
 type Props = {
   icon: string,
-  message: string
+  value: string
 };
 
 const IconWithText = (props: Props) => {
-  const { icon, message } = props;
+  const { icon, value } = props;
   return (
     <div>
       <Icon className={classNames(icon, "icon")} />
-      <Typography>{message}</Typography>
-      <Typography>Empty</Typography>
+      <Typography>{value}</Typography>
     </div>
   );
 };

@@ -4,15 +4,13 @@ import { isEmpty } from 'lodash';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import DefaultSwitch from '../DefaultSwitch/DefaultSwitch';
 
 type Props = { 
-  helperText: string,
   label: string,
   data: Array,
-  name: string,
-  change: Function
+ // name: string,
+ // onChange: Function
 }
 
 class SwitchGroup extends React.Component<Props> {
@@ -23,17 +21,19 @@ class SwitchGroup extends React.Component<Props> {
     }
   }
 
+  
+
   componentDidMount() { 
-    const { data } = this.props;
-    let filtered = data.map((option) => ({
-      [option.value]: (option.isChecked !== undefined) ? option.isChecked : false
-    }))
-    .reduce((result, current) =>  { return Object.assign(result, current); }, {});
-    this.setState({options: filtered});
+    // const { data } = this.props;
+    // let filtered = data.map((option) => ({
+    //   [option.value]: (option.isChecked !== undefined) ? option.isChecked : false
+    // }))
+    // .reduce((result, current) =>  { return Object.assign(result, current); }, {});
+    // this.setState({options: filtered});
   }
 
   handleChange = (event) => { 
-    const { change, name } = this.props;
+  //  const { onChange, name } = this.props;
     event.persist();
     this.setState(prevState => ({
       options: { 
@@ -41,18 +41,15 @@ class SwitchGroup extends React.Component<Props> {
         [event.target.value]: event.target.checked
       }
     }), () => {
-      const { options } = this.state;
-      change({target:  {
-        value: options, 
-        name: name
-      }});
+     // const { options } = this.state;
+    //  onChange(name, val);
     })
 
   }
 
 
   render() {
-    const { helperText, label, data } = this.props;
+    const { label, data } = this.props;
     const { options } = this.state; 
     return (
       <FormControl component="fieldset">
@@ -65,8 +62,6 @@ class SwitchGroup extends React.Component<Props> {
               </FormGroup> 
             ) : null
         }
-
-        <FormHelperText>{helperText}</FormHelperText>
       </FormControl>
     );
   }

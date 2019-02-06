@@ -19,9 +19,14 @@ const SidebarItem = (props: Props) => {
   const {path, name, icon, click, id} = props;
     return (
       <NavLink to={path} className='link' onClick={() => click(id)}>
-        <ListItem button>
+        <ListItem 
+          button
+          classes={{
+            root: classNames('menu-item')
+          }}
+        >
           <Icon className={classNames(icon, 'icon')} />
-          <ListItemText primary={name} className='text' />
+          <ListItemText primary={name} classes={{ primary: 'text'}} />
         </ListItem>
       </NavLink>
     ); 

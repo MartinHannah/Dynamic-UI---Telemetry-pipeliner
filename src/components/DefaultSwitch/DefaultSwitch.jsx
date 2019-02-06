@@ -1,31 +1,50 @@
 import * as React from 'react';
 import './DefaultSwitch.scss';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 type Props = { 
-  isChecked: boolean, 
-  change: Function, 
-  value: any, 
-  label: string
+  onChange: Function, 
+  name: string,
+  value: boolean, 
+  required: boolean,
+  inputProps: Object
 }
 
-const DefaultSwitch = (props: Props) => { 
-      const { isChecked, change, value, label } = props;
-      return(
-        <FormControlLabel
-          control={
-            (
-              <Switch
-                checked={isChecked}
-                onChange={(event) => change(event)}
-                value={value}
-              />
-            )
-          }
-          label={label}
-        /> 
-      );
+class DefaultSwitch extends React.Component<Props> { 
+  constructor(props){ 
+    super(props);
+    this.state = { 
+      val: (props.value !== undefined) ? props.value : false
+    }
+
+    const { val } = this.state;
+    if(val !== props.value) props.onChange(val, props.name);
+  }
+
+
+
+  change = () => { 
+    const { onChange, name } = this.props;
+    const { val } = this.state;
+    this.setState({val: !val});
+    onChange(!val, name);
+  }
+
+  render() { 
+    const { value, required, inputProps } = this.props;
+    return(
+      <Switch
+        checked={value}
+        onChange={this.change}
+        value={value}
+        inputProps={{
+          required: required,
+          ...inputProps
+        }}
+      />
+    );
+  }
+
 }
 
 export default DefaultSwitch;

@@ -10,7 +10,7 @@ module.exports = {
     {
       name: "Widgets",
       content: "docs/pages/widgets.md",
-      components: "src/containers/**/!(Default)[A-Z]*.jsx"
+      components: "src/widgets/**/[A-Z]*.jsx"
     },
     {
       name: "Default Containers",

@@ -1,20 +1,21 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
+//import { findKey } from 'lodash';
 import * as components from '../../utils/views';
-
+import { getWidgetInstanceConfig, getWidget, getWidgetConfig } from '../../utils/api';
+import { getObjectByProp, castValue } from '../../utils/util';
 
 type Props = { 
-  /** Used by reactdnd library to allow this to be a drop target */
-  connectDropTarget: Function,
-  /** Allows this container to be draggable */
-  connectDragSource: Function,
-  /** Is the card currently being dragged */
-  isDragging: boolean,
+  // /** Used by reactdnd library to allow this to be a drop target */
+  // connectDropTarget: Function,
+  // /** Allows this container to be draggable */
+  // connectDragSource: Function,
+  // /** Is the card currently being dragged */
+  // isDragging: boolean,
   /** The widget that this card contains */
   widget: Object,
 }
 
-const getComponent = component => components[component];
+const getComponent = id => components[id];
 
 /** A Draggable container for widgets. 
 All widgets are wrapped in this and if they are draggable it will provide the functionality for this.
@@ -24,22 +25,42 @@ class DefaultCard extends React.Component<Props> {
 
   constructor(props) { 
     super(props);
+    this.state = { 
+      options: undefined,
+      Widget: undefined
+    }
+
+    getWidget(props.widget.uiWidgetId).then((result) => { 
+      this.setState({Widget: getComponent(result.data.name)})
+    })
   }
 
-  convertOptions = () => { 
+  componentDidMount = () => { 
+    this.getOptions();
+  }
+
+  getOptions = () => { 
     const { widget } = this.props;
-    widget.options = widget.options.replace(/'/g, '"');
-    return JSON.parse(widget.options);
+    const config = {}
+    getWidgetInstanceConfig(widget.id).then(async (result) => { 
+      const options = result.data;
+      return { options: options, optionConfig: await getWidgetConfig(widget.uiWidgetId)};
+    })
+    .then((result) =>  {
+      result.options.map(option => {
+        const con = getObjectByProp(result.optionConfig.data, 'id', option.uiWidgetOptionId);
+        config[con.name] = castValue(option.value, con.valueType);
+      })
+     this.setState({options: config});
+    })
   }
 
   render() { 
-    const { widget } = this.props;
-    const Widget = getComponent(widget.name);
+    const { Widget, options } = this.state;
+    console.log(Widget, options);
     return (
       <div className='draggable-card' ref={(node) => (this.widgetRef = node)}>
-        <Paper>
-          <Widget widget={widget} {...this.convertOptions()} />
-        </Paper>
+        {Widget !== undefined ? <Widget {...options} /> : null }
       </div>
     );
   }

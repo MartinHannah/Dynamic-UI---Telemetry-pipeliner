@@ -1,7 +1,7 @@
 Example of the Form Viewer component
 
 ```jsx
-<FormViewer />
+
 ```
 
 Example JSON widget definition

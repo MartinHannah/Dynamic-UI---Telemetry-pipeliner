@@ -5,72 +5,59 @@ import './InputField.scss';
 import TextField from '@material-ui/core/TextField';
 
 type Props = { 
-  change: Function,
-  readOnly?: boolean,
+  onChange: Function,
   placeholder?: string,
-  helperText?: string,
-  isMultiline?: boolean,
-  inputType: string,
-  isRequired?: boolean,
-  rowsMax?: number,
-  label: string,
-  inputComponent: Function,
+  description?: string,
+  required?: boolean,
   name: string,
-  value: any
+  value: any, 
+  inputProps: Object
 }
 
 class InputField extends React.Component<Props> { 
   static defaultProps = { 
-    readOnly: false,
     placeholder: '',
-    helperText: '',
-    isRequired: false,
-    rowsMax: 1, 
-    isMultiline: false,
+    description: '',
+    required: false,
   }
 
     constructor(props) { 
         super(props);
+        this.state = { 
+          val: (props.value !== undefined) ? props.value : ''
+        }
+
+        const { val } = this.state;
+        if(val !== props.value) props.onChange(val, props.name);
     }
 
-    componentDidMount = () =>  {
-
-    }
-
-    handleChange = (event) => { 
-      const { change } = this.props; 
-      if(change === undefined) return;
-      change(event);
-    }
-
-    generateInputProps = () => {
-      let inputProps = {}
-      const { readOnly, inputComponent } = this.props;
-      if(readOnly !== undefined) inputProps.readOnly = readOnly;
-      if(inputComponent !== undefined) inputProps.inputComponent = inputComponent;
-      return inputProps;
+    change(e) {
+      const { onChange, name } = this.props;
+      onChange(e.target.value, name);
+      this.setState({val: e.target.value});
     }
 
 
     render() { 
-      const { change, placeholder, helperText, isMultiline, inputType, isRequired,
-      rowsMax, label, name, value} = this.props;
-      console.log(name, value);
+      const { inputProps, placeholder, description, required, name } = this.props;
+      const { val } = this.state;  
         return(
           <TextField 
-            label={label}
             name={name}
             className='input-field'
-            onChange={change}
+            onChange={(event) => this.change(event)}
             margin="normal"
-            multiline={isMultiline}
-            rowsMax={rowsMax}
             placeholder={placeholder}
-            helperText={helperText}
-            type={inputType}
-            required={isRequired}
-            InputProps={this.generateInputProps}
-            value={value}
+            helperText={description}
+            variant="outlined"
+            inputProps={{
+              required: required,
+              ...inputProps
+            }}
+            value={val}
+            classes={{
+              root: 'input-base'
+            }}
           />
       );
     }   

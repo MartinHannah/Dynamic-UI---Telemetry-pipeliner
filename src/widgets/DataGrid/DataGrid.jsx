@@ -1,8 +1,5 @@
 import * as React from "react";
 import ReactDataGrid from "react-data-grid";
-import {
-  Data
-} from "react-data-grid-addons";
 
 import "./DataGrid.scss";
 import List from '@material-ui/core/List';
@@ -11,25 +8,26 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Switch from '@material-ui/core/Switch';
 
 //Components
-import DefaultModal from "../DefaultModal/DefaultModal";
-import IconWithText from "../IconWithText/IconWithText";
-import DataGridToolbar from "../DataGridToolbar/DataGridToolbar";
+import DefaultModal from "../../components/DefaultModal/DefaultModal";
+import IconWithText from "../../components/IconWithText/IconWithText";
+import DataGridToolbar from "../../components/DataGridToolbar/DataGridToolbar";
 import FormViewer from "../FormViewer/FormViewer";
-import DragDropContainer from './DragDropContainer';
+import DragDropContainer from '../../components/DragDropContainer/DragDropContainer';
 //import DraggableDataGridContainer from '../DraggableDataGridContainer/DraggableDataGridContainer';
 
 //This function will retrieve user rows or customer rows from the mock backend api.
 import { get } from "../../utils/api";
-import { hasValue } from '../../utils/util';
+import { hasValues, isEmptyArray } from '../../utils/util';
+import groupRows from '../../utils/RowGrouper';
+
 
 //const DraggableContainer = Draggable.Container;
 //const GroupedColumnsPanel = ToolsPanel.GroupedColumnsPanel;
-const selectors = Data.Selectors;
+//const selectors = Data.Selectors;
 
 type Props = {
   /** The data string that the grid uses to retrive data. Current test values: 'customers', 'users' */
-  data: string,
-    /** The columns that we want to display on the grid */
+  datasource: string,
   columns: Array,
   /** Set true if the rows in the grid are selectable. This will enable to ability to select multiple rows */
   rowsSelectable?: boolean,
@@ -48,7 +46,7 @@ type Props = {
   /** sort by descending instead of ascending */
   columnDescSortFirst?: boolean,
   /** Are we able to search through the columns */
-  columnsFilterable?: boolean
+  columnsFilterable?: boolean, 
 };
 
 /**
@@ -58,37 +56,55 @@ class DataGrid extends React.Component<Props> {
   static defaultProps = {
     rowsSelectable: false,
     isEditable: false,
-    canExport: false,
+    canExport: true,
     submission: "none",
     formComponents: [],
     columnsResizeable: true,
     columnsSortable: true,
     columnDescSortFirst: false,
-    columnsFilterable: true
+    columnsFilterable: true,
   };
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       selectedIndexes: [],
       editing: false,
-      columns: props.columns,
+      columns: [],
       rows: [],
       filters: [],
       groupBy: [],
+      groupByChips: [],
       columnVisibilityDialog: false
     };
-
+    //parse datasource 
+  // const customerID = 1; 
+  //  const regex = /\$id/gi;
+   // const data = props.datasource.replace(regex, customerID);
     //Get data
-    get(props.data).then((result) => {
-        this.setState({ rows: result.data})
+    console.log(props);
+    get(props.datasource).then((result) => {
+      console.log(result.data);
+      const columns = props.columns.map(col => {
+        return {
+          key: col,
+          name: col
+        }
+      });
+      // const cols = Object.keys(result.data[0]).map((key) =>  {
+      //   console.log(key);
+      //   return { 
+      //     key: key,
+      //     name: key
+      //   }
+      // });
+      // console.log(cols);
+
+      this.setState({ rows: result.data, columns: columns}, () => { 
+        this.initialiseColumns();
+      })
     });
   }
-
-  componentDidMount = () => {
-    this.initialiseColumns();
-  };
 
   initialiseColumns = () => {
     const {
@@ -98,6 +114,7 @@ class DataGrid extends React.Component<Props> {
       columnsFilterable
     } = this.props;
     const { columns } = this.state;
+    console.log(columns);
     const defaultColumnProps = {
       resizable: columnsResizeable,
       sortable: columnsSortable,
@@ -165,18 +182,28 @@ class DataGrid extends React.Component<Props> {
     return columns.filter(col => col.visibility === true);
   }
 
-  getRows = (rows, filters, groupBy) => {
-    const groupedRows = selectors.getRows({ rows, groupBy })
-    return (filters.length > 0) ? this.filterRows(groupedRows) : groupedRows; 
+  getRows = (rows, filters) => {
+    const { groupBy } = this.state;
+    const filteredRows = this.filterRows(rows);
+    const groupedRows = this.getFlattenedGroupedRows(filteredRows, groupBy);
+    return (filters.length > 0) ? groupedRows : this.getFlattenedGroupedRows(rows, groupBy); 
   };
 
   filterRows = (rows) => {
+    const { filters } = this.state;
     let exportable = this.exportableRows(rows);
     const newRows = exportable.filter(r => {
-      return this.hasFilter(r);
+      return hasValues(r, filters);
     });
     return newRows;
-};
+  };
+
+  getFlattenedGroupedRows = (rows, groupedColumns, expandedRows = []) => {
+    if (!groupedColumns || isEmptyArray(groupedColumns)) {
+      return rows;
+    }
+    return groupRows(rows, groupedColumns, expandedRows);
+  };
 
   filterColumns = (column, index) => { 
     const { columns } = this.state;
@@ -187,15 +214,7 @@ class DataGrid extends React.Component<Props> {
     }
   }
 
-  hasFilter = (row) => { 
-    const { filters } = this.state;
-    return filters.find((filter) => { 
-      return hasValue(row, filter); //return the row if it has this value. 
-    })
-  }
-
   onRowsSelected = rows => {
-    console.log("select");
     const { selectedIndexes } = this.state;
     this.setState({
       selectedIndexes: selectedIndexes.concat(rows.map(r => r.rowIdx))
@@ -250,23 +269,31 @@ class DataGrid extends React.Component<Props> {
   };
 
   groupColumn = columnKey => {
-    const { groupBy, columns } = this.state;
+    const { groupBy, columns, groupByChips } = this.state;
+    let chips = groupByChips;
     const columnGroups = groupBy.slice(0);
     const activeColumn = columns.find(c => c.key === columnKey);
     const isNotInGroups =
       columnGroups.find(c => activeColumn.key === c.key) == null;
     if (isNotInGroups) {
       columnGroups.push({ key: activeColumn.key, name: activeColumn.name });
+      chips.push(activeColumn.name);
     }
-    this.setState({ groupBy: columnGroups });
+    this.setState({ groupBy: columnGroups, groupByChips: chips });
   };
 
-  ungroupColumn = columnKey => {
+  ungroupColumn = (columnKey) => {
     const { groupBy } = this.state;
-    let ungroup = groupBy.filter(g =>
-      typeof g === "string" ? g !== columnKey : g.key !== columnKey
-    );
-    this.setState({ groupBy: ungroup });
+    let ungroup = groupBy.filter(g => {
+      return typeof g === "string" ? g !== columnKey : g.name !== columnKey
+    });
+
+    let chips = ungroup.flatMap((col) => {
+
+      return col.name;
+    }); 
+
+    this.setState({ groupBy: ungroup, groupByChips: chips });
   };
 
   handleGridSort = (sortColumn, sortDirection) => {
@@ -292,11 +319,11 @@ class DataGrid extends React.Component<Props> {
       })
       return visible;
     })
-  }
+  };
 
 
   render() {
-    const { editing, columns, rows, filters, groupBy, columnVisibilityDialog } = this.state;
+    const { editing, columns, rows, filters, groupBy, columnVisibilityDialog, groupByChips } = this.state;
     const {
       submission,
       formComponents,
@@ -317,11 +344,11 @@ class DataGrid extends React.Component<Props> {
                 addFilter={(filter) => this.handleFilterChange(filter)}
                 removeFilter={(filter) => this.removeFilter(filter)}
                 exportable={canExport} 
-                groupBy={groupBy} 
+                groupBy={groupByChips} 
                 groupAdded={columnKey =>
                       this.groupColumn(columnKey)} 
-                groupDeleted={columnKey =>
-                      this.ungroupColumn(columnKey)}
+                groupDeleted={(columnKey, columnName) =>
+                      this.ungroupColumn(columnKey, columnName)}
                 currentData={this.exportableRows(filteredRows)}
               />
             )}

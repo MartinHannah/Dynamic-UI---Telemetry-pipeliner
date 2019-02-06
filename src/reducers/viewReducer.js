@@ -23,10 +23,20 @@ const viewReducer = (state = initialState, action) => {
         views: action.views,
       });
     case types.UPDATE_CURRENT_VIEW:
-      return Object.assign({}, state, {
-        currentView: getObjectByProp(state.views, 'id', action.routeId),
-        currentSections: getObjectByProp(state.views, 'id', action.routeId).container.sections,
-      });
+      if(action.routeId == 'pages' || action.routeId == 'widgets') { 
+        return Object.assign({}, state, { 
+          currentView: { 
+            id: action.routeId,
+            label: 'Manage'
+          }
+        })
+      } else { 
+        return Object.assign({}, state, {
+          currentView: getObjectByProp(state.views, 'id', action.routeId),
+          currentSections: getObjectByProp(state.views, 'id', action.routeId).container.sections,
+        });
+      }
+
     case types.MENU_OPEN_CLOSE: 
       return Object.assign({}, state, {
         menuOpen: action.isOpen

@@ -1,19 +1,48 @@
 
-$font-stack: 'Roboto', sans-serif;
-$font-stack-secondary: 'Raleway', sans-serif;
+
 
 //Colours
-$primary-color: #005A5B;
-$secondary-color: #007369;
+$ocean-one: #003840;
+$ocean-two: #005A5B;
+$ocean-three: #007369;
+$ocean-four: #008C72;
+$ocean-five: #02A676;
 
-$shade-one: #003840;
-$shade-two: #005A5B;
-$shade-three: #007369;
-$shade-four: #008C72;
-$shade-five: #02A676;
+$dark-blue: #303c6c;
+$orange: #f4976c;
+$light-blue: #b4dfe5;
 
+//Default Colors;
+$color-alpha: $ocean-one !default;
+$color-beta: $ocean-two !default;
+$color-gamma: $ocean-three !default;
+$color-psi: $ocean-four !default;
+$color-omega: $ocean-five !default;
 
-$font-color: #000;
+//Sidebar Colors
+$sidebar-background-color: #fff!default;
+$sidebar-text-color: #000 !default;
+$sidebar-icon-color: $color-omega !default;
+
+//Appbar Colors
+$appbar-background-color: $color-omega !default;
+$appbar-text-color: #fff!default;
+
+//Main container
+$main-page-background-color: #fff !default;
+
+//Widget Defaults 
+$widget-default-color: #ccc !default;
+
+//Form styling
+$form-label-color: $dark-blue;
+$form-highlight-color: $orange;
+
+//font
+$base-font-color-dark: #000 !default;
+$base-font-color-light: #fff !default;
+$base-font-family-primary: 'Work Sans', sans-serif !default;
+$base-font-family-secondary: 'Raleway', sans-serif !default;
 
 
 //Widths
@@ -22,6 +51,11 @@ $sidebarClosedWidth: 65px;
 $toolbar-height: 56px;
 $standard-padding: 5px;
 $standard-margin: 10px;
+
+//Icons 
+$icon-large: 24px;
+$icon-medium: 18px;
+$icon-small: 10px;
 
 
 .icon-button { 

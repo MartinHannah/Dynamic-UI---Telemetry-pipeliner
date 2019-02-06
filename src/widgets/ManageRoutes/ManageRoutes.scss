@@ -1,0 +1,77 @@
+@import '../../App';
+
+.routes-list { 
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    .routes-container { 
+        background-color: $ocean-three;
+        margin: $standard-margin;
+        display: flex;
+        padding: 5px;
+        width: 250px;
+        justify-content: space-between;
+        border-radius: 5px;
+        
+        .edit-route-title { 
+            align-self: center;
+            color: #fff;
+        }
+
+        .edit-route-button {
+           align-self: center;
+        }
+
+        .edit-route-button:focus { 
+            outline: 0;
+        }
+    }
+}
+
+.section-display { 
+    width: 100%;
+    height: 350px;
+    border: 1px solid #000;
+
+    .section { 
+        box-sizing: border-box;
+        background-color: $orange;
+        margin: 1px;
+
+        .section-edit { 
+            width: 100%;
+            height: 100%;
+            color: white;
+            font-size: 24px;
+            font-family: $base-font-family-primary;
+        }
+
+        .section-edit:focus { 
+            outline: 0;
+        }
+    }
+
+    .no-section-add { 
+        width: 100%;
+        height: 100%;
+        color: #000;
+        background-color: #ccc;
+        font-size: 24px;
+        font-family: $base-font-family-primary;
+    }
+    .no-section-add:focus{ 
+        outline: 0;
+    }
+}
+
+
+.page-form-wrapper{
+    z-index: 0 !important;
+    flex: 1;
+}
+
+.page-form-root { 
+    top: 45% !important;
+    padding: $standard-padding;
+}

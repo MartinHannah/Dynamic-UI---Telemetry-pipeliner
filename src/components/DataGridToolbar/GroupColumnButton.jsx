@@ -12,12 +12,13 @@ type Props = {
 
 const GroupColumnButton = (props: Props) => {
   const { name, onColumnGroupDeleted, columnKey } = props;
+  console.log(name)
   return (
     <Button
       className='grouped-col-button'
       variant="contained"
       color="secondary"
-      onClick={() => onColumnGroupDeleted(columnKey)}
+      onClick={() => onColumnGroupDeleted(columnKey, name)}
     >
       {name}
       <DeleteIcon />

@@ -58,12 +58,12 @@ export const BuildingSummary = Loadable({
 });
 
 export const DataGrid = Loadable({
-    loader: () =>  import('../components/DataGrid/DataGrid'),
+    loader: () =>  import('../widgets/DataGrid/DataGrid'),
     loading: LoadingComponent
 });
 
 export const FormViewer = Loadable({
-    loader: () =>  import('../components/FormViewer/FormViewer'),
+    loader: () =>  import('../widgets/FormViewer/FormViewer'),
     loading: LoadingComponent
 });
 
@@ -79,5 +79,15 @@ export const DefaultButton = Loadable({
 
 export const SwitchGroup = Loadable({
     loader: () =>  import('../components/SwitchGroup/SwitchGroup'),
+    loading: LoadingComponent
+});
+
+export const ManageRoutes = Loadable({
+    loader: () =>  import('../widgets/ManageRoutes/ManageRoutes'),
+    loading: LoadingComponent
+});
+
+export const ManageWidgets = Loadable({
+    loader: () =>  import('../widgets/ManageWidgets/ManageWidgets'),
     loading: LoadingComponent
 });

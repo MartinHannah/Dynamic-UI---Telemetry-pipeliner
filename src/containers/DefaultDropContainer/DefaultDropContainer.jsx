@@ -25,7 +25,7 @@ const DefaultDropContainer = (props:Props) => {
       list
     } = props;
     return (
-      <div>
+      <div className='drop-container'>
         {list !== undefined
           ? list.map((widget, i) => {
               return (

@@ -4,12 +4,17 @@
     background-color: white;
     padding: 5px;
 
+    .toolbar-icon { 
+        font-size: $icon-medium;
+        color: $color-gamma;
+    }
+
     .toolbar-item { 
         margin: 0px 5px 0px 5px;
     }
 
     .toolbar-chip { 
-        background-color: $shade-three;
+        background-color: $color-gamma;
         color: white;
     }
 

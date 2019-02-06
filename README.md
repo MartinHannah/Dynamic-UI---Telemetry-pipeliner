@@ -7,7 +7,7 @@ First run ```npm install``` if it has not been run before.
 
 Run ```npm start``` to run front end React part of the app. 
 
-Run ```docker-compose up``` to run the mock json-server. 
+Must also run the loopback-api project as this project connects to this on the front end. 
 
 
 ## Project Structure
@@ -22,6 +22,7 @@ Example
         |-- Component/
           |--Component.jsx
           |--Component.scss
+          |--Component.md
 
 
 ### Redux
@@ -37,5 +38,8 @@ For examples on how to use flow see: [Flow Documentation](https://flow.org/en/do
 
 ### Views 
 Any components that need to be rendered from information pulled in from the backend should have a definition in the src/utils/views.jsx. This will allow the component to be loaded in dynamically.
+
+### Documentation
+The project auto generates documentation based on comments in the components. To add extra detail and examples add a markdown file in the components folder see Components folder structure for example. 
 
 
